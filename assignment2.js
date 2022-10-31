@@ -110,7 +110,7 @@ class Base_Scene extends Scene {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
         this.color = [hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa")];
-        this.hover = this.swarm = false;
+        this.hover = this.left = false;
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
             'cube': new Cube(),
@@ -173,7 +173,7 @@ export class Assignment2 extends Base_Scene {
         // Add a button for controlling the scene.
         this.key_triggered_button("Outline", ["o"], () => {
             // TODO:  Requirement 5b:  Set a flag here that will toggle your outline on and off
-            this.swarm = !this.swarm;
+            this.left = !this.left;
         });
         this.key_triggered_button("Sit still", ["m"], () => {
             // TODO:  Requirement 3d:  Set a flag here that will toggle your swaying motion on and off.
@@ -200,22 +200,21 @@ export class Assignment2 extends Base_Scene {
         let sc = Mat4.scale(1,1.5,1);
         let prev = Mat4.identity();
     //draw initial scene
-        if(this.swarm){
+        if(this.left){
 
             let ro = Mat4.rotation(Math.abs(Math.sin(t))*Math.PI/2, 1, 0, 0);
             for (let i = -2; i < 4; i+=2){
                 for (let j = -2; j < 4; j+=2){
                     for (let k = -2; k < 4; k+=2){
-                        tr = Mat4.translation(0,0,0);
+                        tr = Mat4.translation(i,j,k);
                         if(i==-2){
                             let tr_center = ro;
                             tr_center = tr_center.times(Mat4.translation(-2,0,0));
                             tr = Mat4.translation(i,j,k);
-                            let center = tr.times(ro);
                             if(j == 0 && k==0){
-                                this.shapes.cube.draw(context, program_state,center, this.materials.plastic.override({color: this.color[(6+i+j+k)%8]}));
+                                this.shapes.cube.draw(context, program_state,tr_center, this.materials.plastic.override({color: this.color[(6+i+j+k)%8]}));
                             }else{
-                                let tr1 = ro;
+                                let tr1 = Mat4.identity();
                                 tr1 = tr1.times(Mat4.translation(0,j,k));
                                 this.shapes.cube.draw(context, program_state,tr_center.times(tr1), this.materials.plastic.override({color: this.color[(6+i+j+k)%8]}));
                             }
