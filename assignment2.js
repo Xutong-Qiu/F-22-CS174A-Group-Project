@@ -169,16 +169,21 @@ export class Assignment2 extends Base_Scene {
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.key_triggered_button("Change Colors", ["c"], this.set_colors);
+        this.key_triggered_button("Front", ["f"], this.set_colors);
         // Add a button for controlling the scene.
-        this.key_triggered_button("Outline", ["o"], () => {
-            // TODO:  Requirement 5b:  Set a flag here that will toggle your outline on and off
+        this.key_triggered_button("Left", ["l"], () => {
             this.left = !this.left;
         });
-        this.key_triggered_button("Sit still", ["m"], () => {
-            // TODO:  Requirement 3d:  Set a flag here that will toggle your swaying motion on and off.
+        this.key_triggered_button("Right", ["r"], () => {
             this.hover =! this.hover;
         });
+        this.key_triggered_button("Top", ["t"], () => {
+            this.left = !this.left;
+        });
+        this.key_triggered_button("Bottom", ["b"], () => {
+            this.left = !this.left;
+        });
+
     }
 
     display(context, program_state) {
