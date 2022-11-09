@@ -7,7 +7,7 @@ const {
 class Cube extends Shape {
     constructor() {
         super("position", "normal",);
-        //test for github
+        //test for github // test again
         // Loop 3 times (for each axis), and inside loop twice (for opposing cube sides):
         this.arrays.position = Vector3.cast(
             [-1, -1, -1], [1, -1, -1], [-1, -1, 1], [1, -1, 1], [1, 1, -1], [-1, 1, -1], [1, 1, 1], [-1, 1, 1],
