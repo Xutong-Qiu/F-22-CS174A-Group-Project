@@ -7,7 +7,6 @@ const {
 class Cube extends Shape {
     constructor() {
         super("position", "normal",);
-        //test for github // test again
         // Loop 3 times (for each axis), and inside loop twice (for opposing cube sides):
         this.arrays.position = Vector3.cast(
             [-1, -1, -1], [1, -1, -1], [-1, -1, 1], [1, -1, 1], [1, 1, -1], [-1, 1, -1], [1, 1, 1], [-1, 1, 1],
@@ -207,7 +206,6 @@ export class Assignment2 extends Base_Scene {
         let prev = Mat4.identity();
     //draw initial scene
         if(this.left){
-
             let ro = Mat4.rotation(Math.abs(Math.sin(t))*Math.PI/2, 1, 0, 0);
             for (let i = -2; i < 4; i+=2){
                 for (let j = -2; j < 4; j+=2){
