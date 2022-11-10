@@ -214,6 +214,34 @@ export class Assignment2 extends Base_Scene {
             this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
         });
+        this.key_triggered_button("Turn right", ["o"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Top turn left", ["o"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Top turn right", ["o"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Left turn down", ["o"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Left turn up", ["o"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Right turn down", ["o"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Right turn up", ["o"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
         this.key_triggered_button("Sit still", ["m"], () => {
             this.hover =! this.hover;
         });
