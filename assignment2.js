@@ -352,6 +352,7 @@ export class Assignment2 extends Base_Scene {
                 this.cube_matrix[8]=c9;
 
                 this.angle = 0;
+                this.direction = 1;
             }
         }
 
