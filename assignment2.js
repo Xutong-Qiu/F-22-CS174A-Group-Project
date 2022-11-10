@@ -158,6 +158,7 @@ export class Assignment2 extends Base_Scene {
         super();
         this.set_colors();
         this.angle = 0;
+        this.direction = 1;
         this.cube_matrix=[
             Mat4.translation(-2,2,0), Mat4.translation(0,2,0), Mat4.translation(2,2,0),
             Mat4.translation(-2,0,0), Mat4.identity(), Mat4.translation(2,0,0),
@@ -215,6 +216,7 @@ export class Assignment2 extends Base_Scene {
             this.pass = !this.pass;
         });
         this.key_triggered_button("Turn right", ["o"], () => {
+            this.direction = -1;
             this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
         });
@@ -274,7 +276,7 @@ export class Assignment2 extends Base_Scene {
 
         if (this.front_couter_clockwise){
             this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
-            let ro = Mat4.rotation(this.angle, 0, 0, 1);
+            let ro = Mat4.rotation(this.angle * this.direction, 0, 0, 1);
             let c1= this.cube_matrix[0];
             c1 = c1.times(Mat4.translation(2,-2,0));
             this.shapes.cube.draw(context, program_state, c1.times(ro).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: this.randomColor[0]}));
@@ -321,7 +323,7 @@ export class Assignment2 extends Base_Scene {
             if (this.angle > 0.499*Math.PI) {
                 this.front_couter_clockwise = !this.front_couter_clockwise;
                 this.pass = !this.pass;
-                ro = Mat4.rotation(Math.PI*0.5, 0, 0, 1);
+                ro = Mat4.rotation(this.direction * Math.PI*0.5, 0, 0, 1);
                 c1 = c1.times(ro).times(Mat4.translation(-2,2,0));
                 this.cube_matrix[0]=c1;
 
