@@ -110,7 +110,7 @@ class Base_Scene extends Scene {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
         this.color = [hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa")];
-        this.hover = this.swarm = false;
+        this.hover = this.front_couter_clockwise = false;
         this.pass = true;
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
@@ -159,17 +159,17 @@ export class Assignment2 extends Base_Scene {
         this.set_colors();
         this.angle = 0;
         this.cube_matrix=[
-            Mat4.identity().times(Mat4.translation(-2,2,0)), Mat4.identity().times(Mat4.translation(0,2,0)), Mat4.identity().times(Mat4.translation(2,2,0)),
-            Mat4.identity().times(Mat4.translation(-2,0,0)), Mat4.identity(), Mat4.identity().times(Mat4.translation(2,0,0)),
-            Mat4.identity().times(Mat4.translation(-2,-2,0)), Mat4.identity().times(Mat4.translation(0,-2,0)), Mat4.identity().times(Mat4.translation(2,-2,0)),
+            Mat4.translation(-2,2,0), Mat4.translation(0,2,0), Mat4.translation(2,2,0),
+            Mat4.translation(-2,0,0), Mat4.identity(), Mat4.translation(2,0,0),
+            Mat4.translation(-2,-2,0), Mat4.translation(0,-2,0), Mat4.translation(2,-2,0),
 
-            Mat4.identity().times(Mat4.translation(-2,2,-2)), Mat4.identity().times(Mat4.translation(0,2,-2)), Mat4.identity().times(Mat4.translation(2,2,-2)),
-            Mat4.identity().times(Mat4.translation(-2,0,-2)), Mat4.identity().times(Mat4.translation(0,0,-2)), Mat4.identity().times(Mat4.translation(2,0,-2)),
-            Mat4.identity().times(Mat4.translation(-2,-2,-2)), Mat4.identity().times(Mat4.translation(0,-2,-2)), Mat4.identity().times(Mat4.translation(2,-2,-2)),
+            Mat4.translation(-2,2,-2), Mat4.translation(0,2,-2), Mat4.translation(2,2,-2),
+            Mat4.translation(-2,0,-2), Mat4.translation(0,0,-2), Mat4.translation(2,0,-2),
+            Mat4.translation(-2,-2,-2), Mat4.translation(0,-2,-2), Mat4.translation(2,-2,-2),
 
-            Mat4.identity().times(Mat4.translation(-2,2,-4)), Mat4.identity().times(Mat4.translation(0,2,-4)), Mat4.identity().times(Mat4.translation(2,2,-4)),
-            Mat4.identity().times(Mat4.translation(-2,0,-4)), Mat4.identity().times(Mat4.translation(0,0,-4)), Mat4.identity().times(Mat4.translation(2,0,-4)),
-            Mat4.identity().times(Mat4.translation(-2,-2,-4)), Mat4.identity().times(Mat4.translation(0,-2,-4)), Mat4.identity().times(Mat4.translation(2,-2,-4))
+            Mat4.translation(-2,2,-4), Mat4.translation(0,2,-4), Mat4.translation(2,2,-4),
+            Mat4.translation(-2,0,-4), Mat4.translation(0,0,-4), Mat4.translation(2,0,-4),
+            Mat4.translation(-2,-2,-4), Mat4.translation(0,-2,-4), Mat4.translation(2,-2,-4)
         ]
         this.randomColor = [color(Math.random(), Math.random(), Math.random(), 1.0),
             color(Math.random(), Math.random(), Math.random(), 1.0),
@@ -200,9 +200,6 @@ export class Assignment2 extends Base_Scene {
             color(Math.random(), Math.random(), Math.random(), 1.0)];
     }
     set_colors() {
-        // TODO:  Create a class member variable to store your cube's colors.
-        // Hint:  You might need to create a member variable at somewhere to store the colors, using `this`.
-        // Hint2: You can consider add a constructor for class Assignment2, or add member variables in Base_Scene's constructor.
         for(let i =0; i < 8; i++){
             this.color[i] = color(Math.random(), Math.random(), Math.random(), 1.0);
         }
@@ -214,12 +211,10 @@ export class Assignment2 extends Base_Scene {
         this.key_triggered_button("Change Colors", ["c"], this.set_colors);
         // Add a button for controlling the scene.
         this.key_triggered_button("Turn left", ["o"], () => {
-            // TODO:  Requirement 5b:  Set a flag here that will toggle your outline on and off
-            this.swarm = !this.swarm;
+            this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
         });
         this.key_triggered_button("Sit still", ["m"], () => {
-            // TODO:  Requirement 3d:  Set a flag here that will toggle your swaying motion on and off.
             this.hover =! this.hover;
         });
     }
@@ -249,12 +244,12 @@ export class Assignment2 extends Base_Scene {
 
         let degree = 0;
 
-        if (this.swarm){
+        if (this.front_couter_clockwise){
             this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
-
+            let ro = Mat4.rotation(this.angle, 0, 0, 1);
             let c1= this.cube_matrix[0];
             c1 = c1.times(Mat4.translation(2,-2,0));
-            this.shapes.cube.draw(context, program_state, c1.times(Mat4.rotation(this.angle, 0, 0, 1)).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: this.randomColor[0]}));
+            this.shapes.cube.draw(context, program_state, c1.times(ro).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: this.randomColor[0]}));
 
             let c2= this.cube_matrix[1];
             c2 = c2.times(Mat4.translation(0,-2,0));
@@ -296,7 +291,7 @@ export class Assignment2 extends Base_Scene {
             //     this.shapes.cube.draw(context, program_state, c1.times(Mat4.rotation((Math.sin(t)+1)*Math.PI*0.25, 0, 0, 1)).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: yellow}));
             // },2,degree, this.shapes.cube);
             if (this.angle > 0.499*Math.PI) {
-                this.swarm = !this.swarm;
+                this.front_couter_clockwise = !this.front_couter_clockwise;
                 this.pass = !this.pass;
 
                 c1 = c1.times(Mat4.rotation(Math.PI*0.5, 0, 0, 1)).times(Mat4.translation(-2,2,0));
@@ -377,25 +372,7 @@ export class Assignment2 extends Base_Scene {
     //
     //     }
 
-    /*
-        if(this.swarm){
-            this.shapes.outline.draw(context, program_state, model_transform.times(sc), this.white, "LINES");//first cube
-            for ( i = 0; i < 7; i++){
-                this.shapes.outline.draw(context, program_state, tr3.times(tr2).times(rotation).times(tr).times(prev).times(sc), this.white, "LINES");
-                prev = tr3.times(tr2).times(rotation).times(tr).times(prev);
-            }
-        }else{
-            this.shapes.cube.draw(context, program_state, model_transform.times(sc), this.materials.plastic.override({color:this.color[0]}));//first cube
-            for ( i = 0; i < 7; i++){
-                if(i%2 == 0){
-                    this.shapes.strip.draw(context, program_state, tr3.times(tr2).times(rotation).times(tr).times(prev).times(sc), this.materials.plastic.override({color:this.color[i+1]}), "TRIANGLE_STRIP");
-                }else {
-                    this.shapes.cube.draw(context, program_state, tr3.times(tr2).times(rotation).times(tr).times(prev).times(sc), this.materials.plastic.override({color: this.color[i + 1]}));// cube
-                }
-                prev = tr3.times(tr2).times(rotation).times(tr).times(prev);
-            }
-        }
-        */
+
 
         //
     }
