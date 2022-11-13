@@ -36,10 +36,10 @@ class Cube_Outline extends Shape {
             [0,1,0],[0,0,0],
         );
         this.arrays.color = [vec4(1,0,0,1),vec4(1,0,0,1),
-                            vec4(0,1,0,1),vec4(0,1,0,1),
+            vec4(0,1,0,1),vec4(0,1,0,1),
             vec4(0,0,1,1),vec4(0,0,1,1),
             vec4(0,0,1,1),vec4(0,0,1,1),
-            ];
+        ];
         //this.indices = false;
         this.arrays.position = Vector3.cast(
             [-1, -1, -1],
@@ -81,7 +81,7 @@ class Cube_Single_Strip extends Shape {
             [-1,1,1],[1,1,1],[1,1,-1],
             [-1,-1,1],[-1,-1,-1],[1,-1,1],
             [-1,-1,-1],[1,-1,1],[1,-1,-1],
-    );
+        );
         this.arrays.normal = Vector3.cast(
             [-1,-1,-1],[-1,1,-1],[1,-1,-1],
             [-1,1,-1],[1,1,-1],[1,-1,-1],
@@ -110,7 +110,7 @@ class Base_Scene extends Scene {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
         this.color = [hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa")];
-        this.hover = this.front_couter_clockwise = false;
+        this.hover = this.front_couter_clockwise = this.Right_turn = this.Top_turn = false;
         this.pass = true;
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
@@ -171,7 +171,70 @@ export class Assignment2 extends Base_Scene {
             Mat4.translation(-2,2,-4), Mat4.translation(0,2,-4), Mat4.translation(2,2,-4),
             Mat4.translation(-2,0,-4), Mat4.translation(0,0,-4), Mat4.translation(2,0,-4),
             Mat4.translation(-2,-2,-4), Mat4.translation(0,-2,-4), Mat4.translation(2,-2,-4)
-        ]
+        ];
+        this.cube_coordinate_status=[
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+            [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
+        ];
+        this.cube_recenter = [
+            [Mat4.translation(2,-2,0),Mat4.translation(-2,2,0),Mat4.translation(2,0,-2),Mat4.translation(-2,0,2),Mat4.translation(0,2,-2),Mat4.translation(0,-2,2)],//0
+            [Mat4.translation(0,-2,0),Mat4.translation(0,2,0),Mat4.translation(0,0,-2),Mat4.translation(0,0,2),Mat4.translation(-2,0,0),Mat4.translation(2,0,0)],//1
+            [Mat4.translation(-2,-2,0),Mat4.translation(2,2,0),Mat4.translation(-2,0,-2),Mat4.translation(2,0,2),Mat4.translation(0,-2,-2),Mat4.translation(0,2,2)],//2
+
+            [Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//3
+            [Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//4
+            [Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.identity(),Mat4.identity(),Mat4.translation(0,0,-2),Mat4.translation(0,0,2)],//5
+
+            [Mat4.translation(2,2,0),Mat4.translation(-2,-2,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//6
+            [Mat4.translation(0,2,0),Mat4.translation(0,-2,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//7
+            [Mat4.translation(-2,2,0),Mat4.translation(2,-2,0),Mat4.identity(),Mat4.identity(),Mat4.translation(0,2,-2),Mat4.translation(0,-2,2)],//8
+
+            [Mat4.identity(),Mat4.identity(),Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.identity(),Mat4.identity()],//9
+            [Mat4.identity(),Mat4.identity(),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.identity(),Mat4.identity()],//10
+            [Mat4.identity(),Mat4.identity(),Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.identity(),Mat4.identity()],//11
+
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//12
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//13
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//14
+
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//15
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//16
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//17
+
+            [Mat4.identity(),Mat4.identity(),Mat4.translation(2,0,2),Mat4.translation(-2,0,-2),Mat4.identity(),Mat4.identity()],//18
+            [Mat4.identity(),Mat4.identity(),Mat4.translation(0,0,2),Mat4.translation(0,0,-2),Mat4.identity(),Mat4.identity()],//19
+            [Mat4.identity(),Mat4.identity(),Mat4.translation(-2,0,2),Mat4.translation(2,0,-2),Mat4.identity(),Mat4.identity()],//20
+
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//21
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//22
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//23
+
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//24
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//25
+            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//26
+        ];
+        this.cube_index=[
+            0,1,2,
+            3,4,5,
+            6,7,8,
+
+            9,10,11,
+            12,13,14,
+            15,16,17,
+
+            18,19,20,
+            21,22,23,
+            24,25,26
+        ];
         this.randomColor = [color(Math.random(), Math.random(), Math.random(), 1.0),
             color(Math.random(), Math.random(), Math.random(), 1.0),
             color(Math.random(), Math.random(), Math.random(), 1.0),
@@ -204,7 +267,6 @@ export class Assignment2 extends Base_Scene {
         for(let i =0; i < 8; i++){
             this.color[i] = color(Math.random(), Math.random(), Math.random(), 1.0);
         }
-
     }
 
     make_control_panel() {
@@ -230,21 +292,21 @@ export class Assignment2 extends Base_Scene {
             this.pass = !this.pass;
         });
         this.key_triggered_button("Left turn down", ["o"], () => {
-            this.left_couter_clockwise = !this.left_couter_clockwise;
+            this.direction = -1;
+            this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
         });
         this.key_triggered_button("Left turn up", ["o"], () => {
-            this.direction = -1;
-            this.left_couter_clockwise = !this.left_couter_clockwise;
+            this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
         });
         this.key_triggered_button("Right turn down", ["o"], () => {
-            this.right_couter_clockwise = !this.right_couter_clockwise;
+            this.Right_turn = !this.Right_turn;
+            this.direction = -1;
             this.pass = !this.pass;
         });
         this.key_triggered_button("Right turn up", ["o"], () => {
-            this.direction = -1
-            this.right_couter_clockwise = !this.right_couter_clockwise;
+            this.Right_turn = !this.Right_turn;
             this.pass = !this.pass;
         });
         this.key_triggered_button("Sit still", ["m"], () => {
@@ -278,323 +340,122 @@ export class Assignment2 extends Base_Scene {
         let degree = 0;
 
         if (this.front_couter_clockwise){
+            let needed_index=[0,1,2,3,4,5,6,7,8];
             this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
-            let ro = Mat4.rotation(this.angle * this.direction, 0, 0, 1);
-            let c1= this.cube_matrix[0];
-            c1 = c1.times(Mat4.translation(2,-2,0));
-            this.shapes.cube.draw(context, program_state, c1.times(ro).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: this.randomColor[0]}));
-
-            let c2= this.cube_matrix[1];
-            c2 = c2.times(Mat4.translation(0,-2,0));
-            this.shapes.cube.draw(context, program_state, c2.times(ro).times(Mat4.translation(0,2,0)), this.materials.plastic.override({color: this.randomColor[1]}));
-
-            let c3= this.cube_matrix[2];
-            c3 = c3.times(Mat4.translation(-2,-2,0));
-            this.shapes.cube.draw(context, program_state, c3.times(ro).times(Mat4.translation(2,2,0)), this.materials.plastic.override({color: this.randomColor[2]}));
-
-            let c4= this.cube_matrix[3];
-            c4 = c4.times(Mat4.translation(2,0,0));
-            this.shapes.cube.draw(context, program_state, c4.times(ro).times(Mat4.translation(-2,0,0)), this.materials.plastic.override({color: this.randomColor[3]}));
-
-            let c5= this.cube_matrix[4];
-            c5 = c5.times(Mat4.translation(0,0,0));
-            this.shapes.cube.draw(context, program_state, c5.times(ro).times(Mat4.translation(0,0,0)), this.materials.plastic.override({color: this.randomColor[4]}));
-
-            let c6= this.cube_matrix[5];
-            c6 = c6.times(Mat4.translation(-2,0,0));
-            this.shapes.cube.draw(context, program_state, c6.times(ro).times(Mat4.translation(2,0,0)), this.materials.plastic.override({color: this.randomColor[5]}));
-
-            let c7= this.cube_matrix[6];
-            c7 = c7.times(Mat4.translation(2,2,0));
-            this.shapes.cube.draw(context, program_state, c7.times(ro).times(Mat4.translation(-2,-2,0)), this.materials.plastic.override({color: this.randomColor[6]}));
-
-            let c8= this.cube_matrix[7];
-            c8 = c8.times(Mat4.translation(0,2,0));
-            this.shapes.cube.draw(context, program_state, c8.times(ro).times(Mat4.translation(0,-2,0)), this.materials.plastic.override({color: this.randomColor[7]}));
-
-            let c9= this.cube_matrix[8];
-            c9 = c9.times(Mat4.translation(-2,2,0));
-            this.shapes.cube.draw(context, program_state, c9.times(ro).times(Mat4.translation(2,-2,0)), this.materials.plastic.override({color: this.randomColor[8]}));
-
-            for (let i = 9; i < 27; i++ ){
-                this.shapes.cube.draw(context, program_state, this.cube_matrix[i], this.materials.plastic.override({color: this.randomColor[i]}));
+            if (this.angle > 0.4999*Math.PI) {
+                this.angle = Math.PI*0.5;
             }
-            //let timer;
-            // timer = setTimeout( function () {
-            //     this.shapes.cube.draw(context, program_state, c1.times(Mat4.rotation((Math.sin(t)+1)*Math.PI*0.25, 0, 0, 1)).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: yellow}));
-            // },2,degree, this.shapes.cube);
-            if (this.angle > 0.499*Math.PI) {
+            let c=[Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()];
+
+            for (let i=0; i < 9; i++){
+                let cube=this.cube_index[needed_index[i]];
+                let x=this.cube_coordinate_status[cube][2][0],y=this.cube_coordinate_status[cube][2][1],z=this.cube_coordinate_status[cube][2][2];
+                let ro = Mat4.rotation(this.angle * this.direction, x, y, z);
+                c[i] = this.cube_matrix[cube];
+                c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][2][3]]);
+                c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][2][3]+1]);
+                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
+                //this.cube_matrix[cube]=c[i];
+            }
+
+            for (let i = 0; i < 27; i++ ){
+                if (! needed_index.includes(i,0)){
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
+                }
+            }
+
+            if (this.angle == 0.5*Math.PI) {
                 this.front_couter_clockwise = !this.front_couter_clockwise;
                 this.pass = !this.pass;
-                ro = Mat4.rotation(this.direction * Math.PI*0.5, 0, 0, 1);
-                c1 = c1.times(ro).times(Mat4.translation(-2,2,0));
-                c2 = c2.times(ro).times(Mat4.translation(0,2,0));
-                c3 = c3.times(ro).times(Mat4.translation(2,2,0));
-                c4 = c4.times(ro).times(Mat4.translation(-2,0,0));
-                c5 = c5.times(ro).times(Mat4.translation(0,0,0));
-                c6 = c6.times(ro).times(Mat4.translation(2,0,0));
-                c7 = c7.times(ro).times(Mat4.translation(-2,-2,0));
-                c8 = c8.times(ro).times(Mat4.translation(0,-2,0));
-                c9 = c9.times(ro).times(Mat4.translation(2,-2,0));
-                this.cube_matrix[0]=c1;
-                this.cube_matrix[1]=c2;
-                this.cube_matrix[2]=c3;
-                this.cube_matrix[3]=c4;
-                this.cube_matrix[4]=c5;
-                this.cube_matrix[5]=c6;
-                this.cube_matrix[6]=c7;
-                this.cube_matrix[7]=c8;
-                this.cube_matrix[8]=c9;
+                let cube=[1,1,1,1,1,1,1,1,1];
+
+                for (let i=0;i < 9; i++){
+                    cube[i] = this.cube_index[needed_index[i]];
+                    this.cube_matrix[cube[i]]=c[i];
+                    let x_coordinate = this.cube_coordinate_status[cube[i]][0],y_coordinate = this.cube_coordinate_status[cube[i]][1],
+                        x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],y_negative_coordinate = this.cube_coordinate_status[cube[i]][4];
+                    this.cube_coordinate_status[cube[i]][0] = y_negative_coordinate;
+                    this.cube_coordinate_status[cube[i]][1] = x_coordinate;
+                    this.cube_coordinate_status[cube[i]][3] = y_coordinate;
+                    this.cube_coordinate_status[cube[i]][4] = x_negative_coordinate;
+                }
+
+                this.cube_index[0]=cube[2];
+                this.cube_index[1]=cube[5];
+                this.cube_index[2]=cube[8];
+                this.cube_index[3]=cube[1];
+                this.cube_index[4]=cube[4];
+                this.cube_index[5]=cube[7];
+                this.cube_index[6]=cube[0];
+                this.cube_index[7]=cube[3];
+                this.cube_index[8]=cube[6];
 
                 this.angle = 0;
                 this.direction = 1;
             }
         }
 
-
-        if (this.left_couter_clockwise){
-            this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
-            let ro = Mat4.rotation(this.angle * this.direction, 1, 0, 0);
-            let c1 = this.cube_matrix[0];
-            c1 = c1.times(Mat4.translation(0,-2,-2));
-            this.shapes.cube.draw(context, program_state, c1.times(ro).times(Mat4.translation(0,2,2)), this.materials.plastic.override({color: this.randomColor[0]}));
-
-            let c4 = this.cube_matrix[3];
-            c4 = c4.times(Mat4.translation(0,0,-2));
-            this.shapes.cube.draw(context, program_state, c4.times(ro).times(Mat4.translation(0,0,2)), this.materials.plastic.override({color: this.randomColor[3]}));
-
-            let c7 = this.cube_matrix[6];
-            c7 = c7.times(Mat4.translation(0,2,-2));
-            this.shapes.cube.draw(context, program_state, c7.times(ro).times(Mat4.translation(0,-2,2)), this.materials.plastic.override({color: this.randomColor[6]}));
-
-            let c10 = this.cube_matrix[9];
-            c10 = c10.times(Mat4.translation(0,-2,0));
-            this.shapes.cube.draw(context, program_state, c10.times(ro).times(Mat4.translation(0,2,0)), this.materials.plastic.override({color: this.randomColor[9]}));
-
-            let c13 = this.cube_matrix[12];
-            c13 = c13.times(Mat4.translation(0,0,0));
-            this.shapes.cube.draw(context, program_state, c13.times(ro).times(Mat4.translation(0,0,0)), this.materials.plastic.override({color: this.randomColor[12]}));
-
-            let c16 = this.cube_matrix[15];
-            c16 = c16.times(Mat4.translation(0,2,0));
-            this.shapes.cube.draw(context, program_state, c16.times(ro).times(Mat4.translation(0, -2,0)), this.materials.plastic.override({color: this.randomColor[15]}));
-
-            let c19 = this.cube_matrix[18];
-            c19 = c19.times(Mat4.translation(0,-2,2));
-            this.shapes.cube.draw(context, program_state, c19.times(ro).times(Mat4.translation(0,2,-2)), this.materials.plastic.override({color: this.randomColor[18]}));
-
-            let c22 = this.cube_matrix[21];
-            c22 = c22.times(Mat4.translation(0,0,2));
-            this.shapes.cube.draw(context, program_state, c22.times(ro).times(Mat4.translation(0,0,-2)), this.materials.plastic.override({color: this.randomColor[21]}));
-
-            let c25 = this.cube_matrix[24];
-            c25 = c25.times(Mat4.translation(0,2,2));
-            this.shapes.cube.draw(context, program_state, c25.times(ro).times(Mat4.translation(0,-2,-2)), this.materials.plastic.override({color: this.randomColor[24]}));
-
-            for (let i = 9; i < 27; i++ ){
-                this.shapes.cube.draw(context, program_state, this.cube_matrix[i], this.materials.plastic.override({color: this.randomColor[i]}));
+        if (this.Top_turn) {
+            let needed_index = [0, 1, 2, 9, 10, 11, 18, 19, 20];
+            this.angle = this.angle + 0.25 * Math.PI * (program_state.animation_delta_time / 1000);
+            if (this.angle > 0.4999*Math.PI) {
+                this.angle = Math.PI*0.5;
             }
-            //let timer;
-            // timer = setTimeout( function () {
-            //     this.shapes.cube.draw(context, program_state, c1.times(Mat4.rotation((Math.sin(t)+1)*Math.PI*0.25, 0, 0, 1)).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: yellow}));
-            // },2,degree, this.shapes.cube);
-            if (this.angle > 0.499*Math.PI) {
-                this.left_couter_clockwise = !this.left_couter_clockwise;
-                this.pass = !this.pass;
-                ro = Mat4.rotation(this.direction * Math.PI*0.5, 1, 0, 0);
-                c1 = c1.times(ro).times(Mat4.translation(0,2,2));
-                this.cube_matrix[0]=c1;
+            let c = [Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity()];
 
-                c4 = c4.times(ro).times(Mat4.translation(0,0,2));
-
-                this.cube_matrix[3]=c4;
-
-                c7 = c7.times(ro).times(Mat4.translation(0,-2,2));
-                this.cube_matrix[6]=c7;
-
-                c10 = c10.times(ro).times(Mat4.translation(0,2,0));
-                this.cube_matrix[9]=c10;
-
-                c13 = c13.times(ro).times(Mat4.translation(0,0,0));
-                this.cube_matrix[12]=c13;
-
-                c16 = c16.times(ro).times(Mat4.translation(0,-2,0));
-                this.cube_matrix[15]=c16;
-
-                c19= c19.times(ro).times(Mat4.translation(0,2,-2));
-                this.cube_matrix[18]=c19;
-
-                c22 = c22.times(ro).times(Mat4.translation(0,0,-2));
-                this.cube_matrix[21]=c22;
-
-                c25 = c25.times(ro).times(Mat4.translation(0,-2,-2));
-                this.cube_matrix[24]=c25;
-
-                this.angle = 0;
-                this.direction = 1;
+            for (let i = 0; i < 9; i++) {
+                let cube = this.cube_index[needed_index[i]];
+                let x = this.cube_coordinate_status[cube][1][0], y = this.cube_coordinate_status[cube][1][1], z = this.cube_coordinate_status[cube][1][2];
+                let ro = Mat4.rotation(this.angle * this.direction, x, y, z);
+                c[i] = this.cube_matrix[cube];
+                c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][1][3]]);
+                c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][1][3] + 1]);
+                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
+                //this.cube_matrix[cube]=c[i];
             }
-        }
 
-
-        if (this.right_couter_clockwise){
-            this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
-            let ro = Mat4.rotation(this.angle * this.direction, 1, 0, 0);
-            let c3 = this.cube_matrix[2];
-            c3 = c3.times(Mat4.translation(0,-2,-2));
-            this.shapes.cube.draw(context, program_state, c3.times(ro).times(Mat4.translation(0,2,2)), this.materials.plastic.override({color: this.randomColor[2]}));
-
-            let c6 = this.cube_matrix[5];
-            c6 = c6.times(Mat4.translation(0,0,-2));
-            this.shapes.cube.draw(context, program_state, c6.times(ro).times(Mat4.translation(0,0,2)), this.materials.plastic.override({color: this.randomColor[5]}));
-
-            let c9 = this.cube_matrix[8];
-            c9 = c9.times(Mat4.translation(0,2,-2));
-            this.shapes.cube.draw(context, program_state, c9.times(ro).times(Mat4.translation(0,-2,2)), this.materials.plastic.override({color: this.randomColor[8]}));
-
-            let c12 = this.cube_matrix[11];
-            c12 = c12.times(Mat4.translation(0,-2,0));
-            this.shapes.cube.draw(context, program_state, c12.times(ro).times(Mat4.translation(0,2,0)), this.materials.plastic.override({color: this.randomColor[11]}));
-
-            let c15 = this.cube_matrix[14];
-            c15 = c15.times(Mat4.translation(0,0,0));
-            this.shapes.cube.draw(context, program_state, c15.times(ro).times(Mat4.translation(0,0,0)), this.materials.plastic.override({color: this.randomColor[14]}));
-
-            let c18 = this.cube_matrix[17];
-            c18 = c18.times(Mat4.translation(0,2,0));
-            this.shapes.cube.draw(context, program_state, c18.times(ro).times(Mat4.translation(0, -2,0)), this.materials.plastic.override({color: this.randomColor[17]}));
-
-            let c21 = this.cube_matrix[20];
-            c21 = c21.times(Mat4.translation(0,-2,2));
-            this.shapes.cube.draw(context, program_state, c21.times(ro).times(Mat4.translation(0,2,-2)), this.materials.plastic.override({color: this.randomColor[20]}));
-
-            let c24 = this.cube_matrix[23];
-            c24 = c24.times(Mat4.translation(0,0,2));
-            this.shapes.cube.draw(context, program_state, c24.times(ro).times(Mat4.translation(0,0,-2)), this.materials.plastic.override({color: this.randomColor[23]}));
-
-            let c27 = this.cube_matrix[26];
-            c27 = c27.times(Mat4.translation(0,2,2));
-            this.shapes.cube.draw(context, program_state, c27.times(ro).times(Mat4.translation(0,-2,-2)), this.materials.plastic.override({color: this.randomColor[26]}));
-
-            // for (let i = 9; i < 27; i++ ){
-            //     this.shapes.cube.draw(context, program_state, this.cube_matrix[i], this.materials.plastic.override({color: this.randomColor[i]}));
-            // }
-            //let timer;
-            // timer = setTimeout( function () {
-            //     this.shapes.cube.draw(context, program_state, c1.times(Mat4.rotation((Math.sin(t)+1)*Math.PI*0.25, 0, 0, 1)).times(Mat4.translation(-2,2,0)), this.materials.plastic.override({color: yellow}));
-            // },2,degree, this.shapes.cube);
-            if (this.angle > 0.499*Math.PI) {
-                this.right_couter_clockwise = !this.right_couter_clockwise;
-                this.pass = !this.pass;
-                ro = Mat4.rotation(this.direction * Math.PI*0.5, 1, 0, 0);
-                c3 = c3.times(ro).times(Mat4.translation(0,2,2));
-                this.cube_matrix[2]=c3;
-
-                c6 = c6.times(ro).times(Mat4.translation(0,0,2));
-                this.cube_matrix[5]=c6;
-
-                c9 = c9.times(ro).times(Mat4.translation(0,-2,2));
-                this.cube_matrix[8]=c9;
-
-                c12 = c12.times(ro).times(Mat4.translation(0,2,0));
-                this.cube_matrix[11]=c12;
-
-                c15 = c15.times(ro).times(Mat4.translation(0,0,0));
-                this.cube_matrix[14]=c15;
-
-                c18 = c18.times(ro).times(Mat4.translation(0,-2,0));
-                this.cube_matrix[17]=c18;
-
-                c21 = c21.times(ro).times(Mat4.translation(0,2,-2));
-                this.cube_matrix[20]=c21;
-
-                c24 = c24.times(ro).times(Mat4.translation(0,0,-2));
-                this.cube_matrix[23]=c24;
-
-                c27 = c27.times(ro).times(Mat4.translation(0,-2,-2));
-                this.cube_matrix[26]=c27;
-
-                this.angle = 0;
-                this.direction = 1;
+            for (let i = 0; i < 27; i++ ){
+                if (! needed_index.includes(i,0)){
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
+                }
             }
-        }
 
-        if (this.Top_turn){
-            this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
-            let ro = Mat4.rotation(this.angle * this.direction, 0, 1, 0);
-            let c1= this.cube_matrix[0];
-            c1 = c1.times(Mat4.translation(2,0,-2));
-            this.shapes.cube.draw(context, program_state, c1.times(ro).times(Mat4.translation(-2,0,2)), this.materials.plastic.override({color: this.randomColor[0]}));
-
-            let c2= this.cube_matrix[1];
-            c2 = c2.times(Mat4.translation(0,0,-2));
-            this.shapes.cube.draw(context, program_state, c2.times(ro).times(Mat4.translation(0,0,2)), this.materials.plastic.override({color: this.randomColor[1]}));
-
-            let c3= this.cube_matrix[2];
-            c3 = c3.times(Mat4.translation(-2,0,-2));
-            this.shapes.cube.draw(context, program_state, c3.times(ro).times(Mat4.translation(2,0,2)), this.materials.plastic.override({color: this.randomColor[2]}));
-
-            let c4= this.cube_matrix[9];
-            c4 = c4.times(Mat4.translation(2,0,0));
-            this.shapes.cube.draw(context, program_state, c4.times(ro).times(Mat4.translation(-2,0,0)), this.materials.plastic.override({color: this.randomColor[9]}));
-
-            let c5= this.cube_matrix[10];
-            c5 = c5.times(Mat4.translation(0,0,0));
-            this.shapes.cube.draw(context, program_state, c5.times(ro).times(Mat4.translation(0,0,0)), this.materials.plastic.override({color: this.randomColor[10]}));
-
-            let c6= this.cube_matrix[11];
-            c6 = c6.times(Mat4.translation(-2,0,0));
-            this.shapes.cube.draw(context, program_state, c6.times(ro).times(Mat4.translation(2,0,0)), this.materials.plastic.override({color: this.randomColor[11]}));
-
-            let c7= this.cube_matrix[18];
-            c7 = c7.times(Mat4.translation(2,0,2));
-            this.shapes.cube.draw(context, program_state, c7.times(ro).times(Mat4.translation(-2,0,-2)), this.materials.plastic.override({color: this.randomColor[18]}));
-
-            let c8= this.cube_matrix[19];
-            c8 = c8.times(Mat4.translation(0,0,2));
-            this.shapes.cube.draw(context, program_state, c8.times(ro).times(Mat4.translation(0,0,-2)), this.materials.plastic.override({color: this.randomColor[19]}));
-
-            let c9= this.cube_matrix[20];
-            c9 = c9.times(Mat4.translation(-2,0,2));
-            this.shapes.cube.draw(context, program_state, c9.times(ro).times(Mat4.translation(2,0,-2)), this.materials.plastic.override({color: this.randomColor[20]}));
-
-            // for (let i = 0; i < 27; i++ ){
-            //     if (i ) {
-            //         this.shapes.cube.draw(context, program_state, this.cube_matrix[i], this.materials.plastic.override({color: this.randomColor[i]}));
-            //     }
-            // }
-            if (this.angle > 0.499*Math.PI) {
+            if (this.angle == 0.5*Math.PI) {
                 this.Top_turn = !this.Top_turn;
                 this.pass = !this.pass;
-                ro = Mat4.rotation(this.direction * Math.PI*0.5, 0, 1, 0);
-                c1 = c1.times(ro).times(Mat4.translation(-2,0,2));
-                c2 = c2.times(ro).times(Mat4.translation(0,0,2));
-                c3 = c3.times(ro).times(Mat4.translation(2,0,2));
-                c4 = c4.times(ro).times(Mat4.translation(-2,0,0));
-                c5 = c5.times(ro).times(Mat4.translation(0,0,0));
-                c6 = c6.times(ro).times(Mat4.translation(2,0,0));
-                c7 = c7.times(ro).times(Mat4.translation(-2,0,-2));
-                c8 = c8.times(ro).times(Mat4.translation(0,0,-2));
-                c9 = c9.times(ro).times(Mat4.translation(2,0,-2));
-                this.cube_matrix[0]=c1;
-                this.cube_matrix[1]=c2;
-                this.cube_matrix[2]=c3;
-                this.cube_matrix[9]=c4;
-                this.cube_matrix[10]=c5;
-                this.cube_matrix[11]=c6;
-                this.cube_matrix[18]=c7;
-                this.cube_matrix[19]=c8;
-                this.cube_matrix[20]=c9;
+                let cube=[1,1,1,1,1,1,1,1,1];
+
+                for (let i=0;i < 9; i++){
+                    cube[i] = this.cube_index[needed_index[i]];
+                    this.cube_matrix[cube[i]]=c[i];
+                    let x_coordinate = this.cube_coordinate_status[cube[i]][0],z_coordinate = this.cube_coordinate_status[cube[i]][2],
+                        x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],z_negative_coordinate = this.cube_coordinate_status[cube[i]][5];
+                    this.cube_coordinate_status[cube[i]][0] = z_negative_coordinate;
+                    this.cube_coordinate_status[cube[i]][3] = z_coordinate;
+                    this.cube_coordinate_status[cube[i]][2] = x_coordinate;
+                    this.cube_coordinate_status[cube[i]][5] = x_negative_coordinate;
+                }
+
+                this.cube_index[0]=cube[2];
+                this.cube_index[1]=cube[5];
+                this.cube_index[2]=cube[8];
+                this.cube_index[9]=cube[1];
+                this.cube_index[10]=cube[4];
+                this.cube_index[11]=cube[7];
+                this.cube_index[18]=cube[0];
+                this.cube_index[19]=cube[3];
+                this.cube_index[20]=cube[6];
 
                 this.angle = 0;
                 this.direction = 1;
             }
         }
+
 
         if (this.pass){
             for (let i = 0; i < 27; i++ ){
-                this.shapes.cube.draw(context, program_state, this.cube_matrix[i], this.materials.plastic.override({color: this.randomColor[i]}));
+                this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
             }
         }
-
     }
 }
