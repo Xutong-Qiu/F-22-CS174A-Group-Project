@@ -171,40 +171,40 @@ export class Assignment2 extends Base_Scene {
             Mat4.translation(-2,0,-4), Mat4.translation(0,0,-4), Mat4.translation(2,0,-4),
             Mat4.translation(-2,-2,-4), Mat4.translation(0,-2,-4), Mat4.translation(2,-2,-4)
         ]
+
+        this.cube_color = [[color(1,1,0,1),color(0,1,1,1),color(1,0,1,1)], //0
+                            [color(1,0,1,1),color(0,1,1,1),color(1,0,1,1)],//1
+                            [color(0,0,0,1),color(0,1,1,1),color(1,0,1,1)],//2
+                            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],//3
+                            [color(0,1,1,1),color(0,1,1,1),color(0,1,1,1)],//4
+                            [color(0,0,0,1),color(0,1,1,1),color(0,1,1,1)],//5
+                            [color(1,1,0,1),color(0,1,1,1),color(0,1,0,1)],//6
+                            [color(0,1,0,1),color(0,1,1,1),color(0,1,1,1)],//7
+                            [color(0,0,0,1),color(0,1,1,1),color(0,1,0,1)],//8
+            [color(1,0,1,1),color(1,1,0,1),color(0,1,1,1)],//9
+            [color(1,0,1,1),color(0,1,1,1),color(0,1,1,1)],//10
+            [color(1,0,1,1),color(0,0,0,1),color(0,0,0,1)],//11
+            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],//12
+            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],//13
+            [color(0,0,0,1),color(0,1,1,1),color(0,1,1,1)],//14
+            [color(0,1,0,1),color(1,1,0,1),color(0,1,1,1)],//15
+            [color(0,1,0,1),color(0,1,1,1),color(0,1,1,1)],//16
+            [color(0,1,0,1),color(0,0,0,1),color(0,0,0,1)],//17
+                [color(1,1,0,1),color(1,0,0,1),color(1,0,1,1)],//18
+                [color(1,0,1,1),color(1,0,0,1),color(1,0,1,1)],//19
+                [color(0,0,0,1),color(1,0,0,1),color(1,0,1,1)],//20
+                [color(1,1,0,1),color(1,0,0,1),color(0,1,1,1)],//21
+                [color(1,0,0,1),color(0,1,1,1),color(0,1,1,1)],//22
+                [color(0,0,0,1),color(1,0,0,1),color(0,1,1,1)],//23
+                [color(1,1,0,1),color(1,0,0,1),color(0,1,0,1)],//24
+                [color(0,1,0,1),color(1,0,0,1),color(0,1,1,1)],//25
+                [color(0,0,0,1),color(1,0,0,1),color(0,1,0,1)]//26
+        ];
         this.c0_tl = [Mat4.translation(-3,2,0),Mat4.translation(-2,2,1),Mat4.translation(-2,3,0)];
         this.c0_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
-        this.cube_color = [[color(1,1,0,1),color(0,1,1,1),color(1,0,1,1)],
-                            [color(0,1,1,1),color(1,0,1,1),color(1,0,1,1)],
-                            [color(0,0,0,1),color(0,1,1,1),color(1,0,1,1)],
-                            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],
-                            [color(0,1,1,1),color(0,1,1,1),color(0,1,1,1)],
-                            [color(0,0,0,1),color(0,1,1,1),color(0,1,1,1)],
-                            [color(1,1,0,1),color(0,1,1,1),color(0,1,0,1)],
-                            [color(0,1,0,1),color(0,1,1,1),color(0,1,1,1)],
-                            [color(0,0,0,1),color(0,1,1,1),color(0,1,0,1)],
-            [color(1,0,1,1),color(1,1,0,1),color(0,1,1,1)],
-            [color(1,0,1,1),color(0,1,1,1),color(0,1,1,1)],
-            [color(1,0,1,1),color(0,0,0,1),color(0,0,0,1)],
-            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],
-            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],
-            [color(0,0,0,1),color(0,1,1,1),color(0,1,1,1)],
-            [color(0,1,0,1),color(1,1,0,1),color(0,1,1,1)],
-            [color(0,1,0,1),color(0,1,1,1),color(0,1,1,1)],
-            [color(0,1,0,1),color(0,0,0,1),color(0,0,0,1)],
-                [color(1,1,0,1),color(1,0,0,1),color(1,0,1,1)],
-                [color(1,0,1,1),color(1,0,0,1),color(1,0,1,1)],
-                [color(0,0,0,1),color(1,0,0,1),color(1,0,1,1)],
-                [color(1,1,0,1),color(1,0,0,1),color(0,1,1,1)],
-                [color(1,0,0,1),color(0,1,1,1),color(0,1,1,1)],
-                [color(0,0,0,1),color(1,0,0,1),color(0,1,1,1)],
-                [color(1,1,0,1),color(1,0,0,1),color(0,1,0,1)],
-                [color(0,1,0,1),color(1,0,0,1),color(0,1,1,1)],
-                [color(0,0,0,1),color(1,0,0,1),color(0,1,0,1)]
-        ];
 
-
-        this.c1_tl = [Mat4.translation(0,2,1),Mat4.translation(0,3,0)];
-        this.c1_tsc = [Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+        this.c1_tl = [Mat4.translation(0,3,0), Mat4.translation(0,2,1)];
+        this.c1_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.9,0.9,0.001)];
 
         this.c2_tl = [Mat4.translation(3,2,0),Mat4.translation(2,2,1),Mat4.translation(2,3,0)];
         this.c2_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
@@ -392,30 +392,38 @@ export class Assignment2 extends Base_Scene {
     front_rotation_texture_update(context, program_state, direction){
         let ro = Mat4.rotation(this.angle, 0, 0, direction);
         /*update texture location */
-        for(let i=0; i<3; i++){
-            this.c0_tl[i] = ro.times(this.c0_tl[i]);
-            this.c2_tl[i] = ro.times(this.c2_tl[i]);
-            this.c6_tl[i] = ro.times(this.c6_tl[i]);
-            this.c8_tl[i] = ro.times(this.c8_tl[i]);
-            /*this.c18_tl[i] = ro.times(this.c18_tl[i]);
-            this.c20_tl[i] = ro.times(this.c20_tl[i]);
-            this.c24_tl[i] = ro.times(this.c24_tl[i]);
-            this.c26_tl[i] = ro.times(this.c26_tl[i]);*/
+        let temp1 = this.cube_color[0];
+        let temp2 = this.cube_color[2];
+        let temp3 = this.cube_color[6];
+        let temp4 = this.cube_color[8];
+        this.cube_color[0] =  temp2;
+        let temp = this.cube_color[0][0];
+        this.cube_color[0][0] = this.cube_color[0][2];
+        this.cube_color[0][2] = temp;
 
-        }
-        this.c4_tl[0] = ro.times(this.c4_tl[0]);
-        /*this.c10_tl[0] = ro.times(this.c10_tl[0]);
-        this.c12_tl[0] = ro.times(this.c12_tl[0]);
-        this.c14_tl[0] = ro.times(this.c14_tl[0]);
-        this.c16_tl[0] = ro.times(this.c16_tl[0]);
-        this.c22_tl[0] = ro.times(this.c22_tl[0]);*/
-        for(let i=0; i<2; i++){
-            this.c1_tl[i] = ro.times(this.c1_tl[i]);
-            this.c3_tl[i] = ro.times(this.c3_tl[i]);
-            this.c5_tl[i] = ro.times(this.c5_tl[i]);
-            this.c7_tl[i] = ro.times(this.c7_tl[i]);
-        }
-        /*end*/
+        this.cube_color[2] =  temp4;
+        temp = this.cube_color[2][0];
+        this.cube_color[2][0] = this.cube_color[2][2];
+        this.cube_color[2][2] = temp;
+
+        this.cube_color[6] =  temp1;
+        temp = this.cube_color[6][0];
+        this.cube_color[6][0] = this.cube_color[6][2];
+        this.cube_color[6][2] = temp;
+
+        this.cube_color[8] =  temp3;
+        temp = this.cube_color[8][0];
+        this.cube_color[8][0] = this.cube_color[8][2];
+        this.cube_color[8][2] = temp;
+
+        temp1 = this.cube_color[1];
+        temp2 = this.cube_color[3];
+        temp3 = this.cube_color[5];
+        temp4 = this.cube_color[7];
+        this.cube_color[1] = temp3;
+        this.cube_color[3]= temp1;
+        this.cube_color[5] = temp4;
+        this.cube_color[7] = temp2;
     }
     idle_texture(context, program_state){
         //rendering corner cube texture
