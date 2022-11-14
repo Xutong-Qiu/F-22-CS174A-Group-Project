@@ -389,41 +389,165 @@ export class Assignment2 extends Base_Scene {
             this.shapes.cube.draw(context, program_state,this.c25_tl[i].times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );
         }
     }
-    front_rotation_texture_update(context, program_state, direction){
-        let ro = Mat4.rotation(this.angle, 0, 0, direction);
+    front_rotation_texture_update(direction){
         /*update texture location */
         let temp1 = this.cube_color[0];
         let temp2 = this.cube_color[2];
         let temp3 = this.cube_color[6];
         let temp4 = this.cube_color[8];
-        this.cube_color[0] =  temp2;
-        let temp = this.cube_color[0][0];
-        this.cube_color[0][0] = this.cube_color[0][2];
-        this.cube_color[0][2] = temp;
+        if(direction == 1){
+            this.cube_color[0] =  temp2;
+            let temp = this.cube_color[0][0];
+            this.cube_color[0][0] = this.cube_color[0][2];
+            this.cube_color[0][2] = temp;
 
-        this.cube_color[2] =  temp4;
-        temp = this.cube_color[2][0];
-        this.cube_color[2][0] = this.cube_color[2][2];
-        this.cube_color[2][2] = temp;
+            this.cube_color[2] =  temp4;
+            temp = this.cube_color[2][0];
+            this.cube_color[2][0] = this.cube_color[2][2];
+            this.cube_color[2][2] = temp;
 
-        this.cube_color[6] =  temp1;
-        temp = this.cube_color[6][0];
-        this.cube_color[6][0] = this.cube_color[6][2];
-        this.cube_color[6][2] = temp;
+            this.cube_color[6] =  temp1;
+            temp = this.cube_color[6][0];
+            this.cube_color[6][0] = this.cube_color[6][2];
+            this.cube_color[6][2] = temp;
 
-        this.cube_color[8] =  temp3;
-        temp = this.cube_color[8][0];
-        this.cube_color[8][0] = this.cube_color[8][2];
-        this.cube_color[8][2] = temp;
+            this.cube_color[8] =  temp3;
+            temp = this.cube_color[8][0];
+            this.cube_color[8][0] = this.cube_color[8][2];
+            this.cube_color[8][2] = temp;
 
-        temp1 = this.cube_color[1];
-        temp2 = this.cube_color[3];
-        temp3 = this.cube_color[5];
-        temp4 = this.cube_color[7];
-        this.cube_color[1] = temp3;
-        this.cube_color[3]= temp1;
-        this.cube_color[5] = temp4;
-        this.cube_color[7] = temp2;
+            temp1 = this.cube_color[1];
+            temp2 = this.cube_color[3];
+            temp3 = this.cube_color[5];
+            temp4 = this.cube_color[7];
+            this.cube_color[1] = temp3;
+            this.cube_color[3]= temp1;
+            this.cube_color[5] = temp4;
+            this.cube_color[7] = temp2;
+        }else{
+
+        }
+
+    }
+    top_rotation_texture_update(direction){ //corner: 0 2 18 20; edge: 1 9 11 19
+        /*update texture location */
+        let temp1 = this.cube_color[0];
+        let temp2 = this.cube_color[2];
+        let temp3 = this.cube_color[18];
+        let temp4 = this.cube_color[20];
+        if(direction == 1){
+            this.cube_color[0] =  temp3;
+            let temp = this.cube_color[0][0];
+            // this.cube_color[0][0] = this.cube_color[0][2];
+            // this.cube_color[0][2] = temp;
+
+            this.cube_color[2] =  temp1;
+            temp = this.cube_color[2][0];
+            this.cube_color[2][0] = this.cube_color[2][2];
+            this.cube_color[2][2] = temp;
+
+            this.cube_color[20] =  temp2;
+            temp = this.cube_color[6][0];
+            this.cube_color[6][0] = this.cube_color[6][2];
+            this.cube_color[6][2] = temp;
+
+            this.cube_color[18] =  temp4;
+            temp = this.cube_color[8][0];
+            this.cube_color[8][0] = this.cube_color[8][2];
+            this.cube_color[8][2] = temp;
+
+            temp1 = this.cube_color[1];
+            temp2 = this.cube_color[9];
+            temp3 = this.cube_color[11];
+            temp4 = this.cube_color[19];
+            this.cube_color[1] = temp2;
+            this.cube_color[9]= temp4;
+            this.cube_color[11] = temp1;
+            this.cube_color[19] = temp3;
+        }else{
+
+        }
+
+    }
+    left_rotation_texture_update(direction){ // 18 0 24 6; 3 9 15 21;
+        /*update texture location */
+        let temp1 = this.cube_color[18];
+        let temp2 = this.cube_color[0];
+        let temp3 = this.cube_color[24];
+        let temp4 = this.cube_color[6];
+        if(direction == 1){
+            this.cube_color[18] =  temp2;
+            let temp = this.cube_color[0][0];
+            // this.cube_color[0][0] = this.cube_color[0][2];
+            // this.cube_color[0][2] = temp;
+
+            this.cube_color[0] =  temp4;
+            temp = this.cube_color[2][0];
+            // this.cube_color[2][0] = this.cube_color[2][2];
+            // this.cube_color[2][2] = temp;
+
+            this.cube_color[24] =  temp1;
+            temp = this.cube_color[6][0];
+            // this.cube_color[6][0] = this.cube_color[6][2];
+            // this.cube_color[6][2] = temp;
+
+            this.cube_color[6] =  temp3;
+            temp = this.cube_color[8][0];
+            // this.cube_color[8][0] = this.cube_color[8][2];
+            // this.cube_color[8][2] = temp;
+
+            temp1 = this.cube_color[3];
+            temp2 = this.cube_color[9];
+            temp3 = this.cube_color[15];
+            temp4 = this.cube_color[21];
+            this.cube_color[21] = temp2;
+            this.cube_color[3]= temp3;
+            this.cube_color[15] = temp4;
+            this.cube_color[9] = temp1;
+        }else{
+
+        }
+
+    }
+    right_rotation_texture_update(direction){ //2 20 8 26; 11 5 23 17
+        /*update texture location */
+        let temp1 = this.cube_color[2];
+        let temp2 = this.cube_color[20];
+        let temp3 = this.cube_color[8];
+        let temp4 = this.cube_color[26];
+        if(direction == 1){
+            this.cube_color[2] =  temp2;
+            let temp = this.cube_color[0][0];
+            // this.cube_color[0][0] = this.cube_color[0][2];
+            // this.cube_color[0][2] = temp;
+
+            this.cube_color[20] =  temp4;
+            temp = this.cube_color[2][0];
+            // this.cube_color[2][0] = this.cube_color[2][2];
+            // this.cube_color[2][2] = temp;
+
+            this.cube_color[8] =  temp1;
+            temp = this.cube_color[6][0];
+            // this.cube_color[6][0] = this.cube_color[6][2];
+            // this.cube_color[6][2] = temp;
+
+            this.cube_color[26] =  temp3;
+            temp = this.cube_color[8][0];
+            // this.cube_color[8][0] = this.cube_color[8][2];
+            // this.cube_color[8][2] = temp;
+
+            temp1 = this.cube_color[11];
+            temp2 = this.cube_color[5];
+            temp3 = this.cube_color[23];
+            temp4 = this.cube_color[17];
+            this.cube_color[11] = temp3;
+            this.cube_color[5]= temp1;
+            this.cube_color[23] = temp4;
+            this.cube_color[17] = temp2;
+        }else{
+
+        }
+
     }
     idle_texture(context, program_state){
         //rendering corner cube texture
@@ -465,8 +589,6 @@ export class Assignment2 extends Base_Scene {
         const blue = hex_color("#1a9ffa"), yellow = hex_color("#fdc03a");
         let model_transform = Mat4.identity();
 
-        /*Requirement 3*/
-        // TODO:  Draw your entire scene here.  Use this.draw_box( graphics_state, model_transform ) to call your helper.
 
         let t = program_state.animation_time/1000; //ms->s
         let dt = program_state.animation_delta_time/1000;
@@ -565,7 +687,7 @@ export class Assignment2 extends Base_Scene {
 
                 c9 = c9.times(ro).times(Mat4.translation(2,-2,0));
                 this.cube_matrix[8]=c9;
-                this.front_rotation_texture_update(context, program_state, 1);
+                this.front_rotation_texture_update(1);
                 this.angle = 0;
             }
         }
