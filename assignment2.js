@@ -185,42 +185,43 @@ export class Assignment2 extends Base_Scene {
             [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
             [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
         ];
+        //z,y,x
         this.cube_recenter = [
-            [Mat4.translation(2,-2,0),Mat4.translation(-2,2,0),Mat4.translation(2,0,-2),Mat4.translation(-2,0,2),Mat4.translation(0,2,-2),Mat4.translation(0,-2,2)],//0
-            [Mat4.translation(0,-2,0),Mat4.translation(0,2,0),Mat4.translation(0,0,-2),Mat4.translation(0,0,2),Mat4.translation(-2,0,0),Mat4.translation(2,0,0)],//1
+            [Mat4.translation(2,-2,0),Mat4.translation(-2,2,0),Mat4.translation(2,0,-2),Mat4.translation(-2,0,2),Mat4.translation(0,-2,-2),Mat4.translation(0,2,2)],//0
+            [Mat4.translation(0,-2,0),Mat4.translation(0,2,0),Mat4.translation(0,0,-2),Mat4.translation(0,0,2),Mat4.translation(0,-2,-2),Mat4.translation(0,2,2)],//1
             [Mat4.translation(-2,-2,0),Mat4.translation(2,2,0),Mat4.translation(-2,0,-2),Mat4.translation(2,0,2),Mat4.translation(0,-2,-2),Mat4.translation(0,2,2)],//2
 
-            [Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//3
-            [Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//4
-            [Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.identity(),Mat4.identity(),Mat4.translation(0,0,-2),Mat4.translation(0,0,2)],//5
+            [Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.translation(2,0,-2),Mat4.translation(-2,0,2),Mat4.translation(0,0,-2),Mat4.translation(0,0,2)],//3
+            [Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,-2),Mat4.translation(0,0,2)],//4
+            [Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.translation(-2,0,-2),Mat4.translation(2,0,2),Mat4.translation(0,0,-2),Mat4.translation(0,0,2)],//5
 
-            [Mat4.translation(2,2,0),Mat4.translation(-2,-2,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//6
-            [Mat4.translation(0,2,0),Mat4.translation(0,-2,0),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//7
-            [Mat4.translation(-2,2,0),Mat4.translation(2,-2,0),Mat4.identity(),Mat4.identity(),Mat4.translation(0,2,-2),Mat4.translation(0,-2,2)],//8
+            [Mat4.translation(2,2,0),Mat4.translation(-2,-2,0),Mat4.translation(2,0,-2),Mat4.translation(-2,0,2),Mat4.translation(0,2,-2),Mat4.translation(0,-2,2)],//6
+            [Mat4.translation(0,2,0),Mat4.translation(0,-2,0),Mat4.translation(0,0,-2),Mat4.translation(0,0,2),Mat4.translation(0,2,-2),Mat4.translation(0,-2,2)],//7
+            [Mat4.translation(-2,2,0),Mat4.translation(2,-2,0),Mat4.translation(-2,0,-2),Mat4.translation(2,0,2),Mat4.translation(0,2,-2),Mat4.translation(0,-2,2)],//8
 
-            [Mat4.identity(),Mat4.identity(),Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.identity(),Mat4.identity()],//9
-            [Mat4.identity(),Mat4.identity(),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.identity(),Mat4.identity()],//10
-            [Mat4.identity(),Mat4.identity(),Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.identity(),Mat4.identity()],//11
+            [Mat4.translation(2,-2,0),Mat4.translation(-2,2,0),Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.translation(0,-2,0),Mat4.translation(0,2,0)],//9
+            [Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0)],//10
+            [Mat4.translation(-2,-2,0),Mat4.translation(2,2,0),Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.translation(0,-2,0),Mat4.translation(0,2,0)],//11
 
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//12
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//13
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//14
+            [Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0)],//12
+            [Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0)],//13
+            [Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0)],//14
 
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//15
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//16
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//17
+            [Mat4.translation(2,2,0),Mat4.translation(-2,-2,0),Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.translation(0,2,0),Mat4.translation(0,-2,0)],//15
+            [Mat4.translation(0,2,0),Mat4.translation(0,-2,0),Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,2,0),Mat4.translation(0,-2,0)],//16
+            [Mat4.translation(-2,2,0),Mat4.translation(2,-2,0),Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.translation(0,2,0),Mat4.translation(0,-2,0)],//17
 
-            [Mat4.identity(),Mat4.identity(),Mat4.translation(2,0,2),Mat4.translation(-2,0,-2),Mat4.identity(),Mat4.identity()],//18
-            [Mat4.identity(),Mat4.identity(),Mat4.translation(0,0,2),Mat4.translation(0,0,-2),Mat4.identity(),Mat4.identity()],//19
-            [Mat4.identity(),Mat4.identity(),Mat4.translation(-2,0,2),Mat4.translation(2,0,-2),Mat4.identity(),Mat4.identity()],//20
+            [Mat4.translation(2,-2,0),Mat4.translation(-2,2,0),Mat4.translation(2,0,2),Mat4.translation(-2,0,-2),Mat4.translation(0,-2,2),Mat4.translation(0,2,-2)],//18
+            [Mat4.translation(0,-2,0),Mat4.translation(0,2,0),Mat4.translation(0,0,2),Mat4.translation(0,0,-2),Mat4.translation(0,-2,2),Mat4.translation(0,2,-2)],//19
+            [Mat4.translation(-2,-2,0),Mat4.translation(2,2,0),Mat4.translation(-2,0,2),Mat4.translation(2,0,-2),Mat4.translation(0,-2,2),Mat4.translation(0,2,-2)],//20
 
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//21
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//22
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//23
+            [Mat4.translation(2,0,0),Mat4.translation(-2,0,0),Mat4.translation(2,0,2),Mat4.translation(-2,0,-2),Mat4.translation(0,0,2),Mat4.translation(0,0,-2)],//21
+            [Mat4.translation(0,0,0),Mat4.translation(0,0,0),Mat4.translation(0,0,2),Mat4.translation(0,0,-2),Mat4.translation(0,0,2),Mat4.translation(0,0,-2)],//22
+            [Mat4.translation(-2,0,0),Mat4.translation(2,0,0),Mat4.translation(-2,0,2),Mat4.translation(2,0,-2),Mat4.translation(0,0,2),Mat4.translation(0,0,-2)],//23
 
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//24
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//25
-            [Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()],//26
+            [Mat4.translation(2,2,0),Mat4.translation(-2,-2,0),Mat4.translation(2,0,2),Mat4.translation(-2,0,-2),Mat4.translation(0,2,2),Mat4.translation(0,-2,-2)],//24
+            [Mat4.translation(0,2,0),Mat4.translation(0,-2,0),Mat4.translation(0,0,2),Mat4.translation(0,0,-2),Mat4.translation(0,2,2),Mat4.translation(0,-2,-2)],//25
+            [Mat4.translation(-2,2,0),Mat4.translation(2,-2,0),Mat4.translation(-2,0,2),Mat4.translation(2,0,-2),Mat4.translation(0,2,2),Mat4.translation(0,-2,-2)],//26
         ];
         this.cube_index=[
             0,1,2,
