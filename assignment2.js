@@ -342,6 +342,7 @@ export class Assignment2 extends Base_Scene {
 
         if (this.front_couter_clockwise){
             let needed_index=[0,1,2,3,4,5,6,7,8];
+            let coordinate = 2;
             this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
             if (this.angle > 0.4999*Math.PI) {
                 this.angle = Math.PI*0.5;
@@ -350,11 +351,11 @@ export class Assignment2 extends Base_Scene {
 
             for (let i=0; i < 9; i++){
                 let cube=this.cube_index[needed_index[i]];
-                let x=this.cube_coordinate_status[cube][2][0],y=this.cube_coordinate_status[cube][2][1],z=this.cube_coordinate_status[cube][2][2];
-                let ro = Mat4.rotation(this.angle * this.direction, x, y, z);
+                let x=this.cube_coordinate_status[cube][coordinate][0],y=this.cube_coordinate_status[cube][coordinate][1],z=this.cube_coordinate_status[cube][coordinate][2];
+                let ro = Mat4.rotation( this.angle, x* this.direction, y* this.direction, z* this.direction);
                 c[i] = this.cube_matrix[cube];
-                c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][2][3]]);
-                c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][2][3]+1]);
+                c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
+                c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]+1]);
                 this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
                 //this.cube_matrix[cube]=c[i];
             }
@@ -370,26 +371,51 @@ export class Assignment2 extends Base_Scene {
                 this.pass = !this.pass;
                 let cube=[1,1,1,1,1,1,1,1,1];
 
-                for (let i=0;i < 9; i++){
-                    cube[i] = this.cube_index[needed_index[i]];
-                    this.cube_matrix[cube[i]]=c[i];
-                    let x_coordinate = this.cube_coordinate_status[cube[i]][0],y_coordinate = this.cube_coordinate_status[cube[i]][1],
-                        x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],y_negative_coordinate = this.cube_coordinate_status[cube[i]][4];
-                    this.cube_coordinate_status[cube[i]][0] = y_negative_coordinate;
-                    this.cube_coordinate_status[cube[i]][1] = x_coordinate;
-                    this.cube_coordinate_status[cube[i]][3] = y_coordinate;
-                    this.cube_coordinate_status[cube[i]][4] = x_negative_coordinate;
+                if (this.direction == 1){
+                    for (let i=0;i < 9; i++){
+                        cube[i] = this.cube_index[needed_index[i]];
+                        this.cube_matrix[cube[i]]=c[i];
+                        let x_coordinate = this.cube_coordinate_status[cube[i]][0],y_coordinate = this.cube_coordinate_status[cube[i]][1],
+                            x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],y_negative_coordinate = this.cube_coordinate_status[cube[i]][4];
+                        this.cube_coordinate_status[cube[i]][0] = y_negative_coordinate;
+                        this.cube_coordinate_status[cube[i]][1] = x_coordinate;
+                        this.cube_coordinate_status[cube[i]][3] = y_coordinate;
+                        this.cube_coordinate_status[cube[i]][4] = x_negative_coordinate;
+                    }
+
+                    this.cube_index[0]=cube[2];
+                    this.cube_index[1]=cube[5];
+                    this.cube_index[2]=cube[8];
+                    this.cube_index[3]=cube[1];
+                    this.cube_index[4]=cube[4];
+                    this.cube_index[5]=cube[7];
+                    this.cube_index[6]=cube[0];
+                    this.cube_index[7]=cube[3];
+                    this.cube_index[8]=cube[6];
+                }
+                else{
+                    for (let i=0;i < 9; i++){
+                        cube[i] = this.cube_index[needed_index[i]];
+                        this.cube_matrix[cube[i]]=c[i];
+                        let x_coordinate = this.cube_coordinate_status[cube[i]][0],y_coordinate = this.cube_coordinate_status[cube[i]][1],
+                            x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],y_negative_coordinate = this.cube_coordinate_status[cube[i]][4];
+                        this.cube_coordinate_status[cube[i]][0] = y_coordinate;
+                        this.cube_coordinate_status[cube[i]][1] = x_negative_coordinate;
+                        this.cube_coordinate_status[cube[i]][3] = y_negative_coordinate;
+                        this.cube_coordinate_status[cube[i]][4] = x_coordinate;
+                    }
+
+                    this.cube_index[0]=cube[6];
+                    this.cube_index[1]=cube[3];
+                    this.cube_index[2]=cube[0];
+                    this.cube_index[3]=cube[7];
+                    this.cube_index[4]=cube[4];
+                    this.cube_index[5]=cube[1];
+                    this.cube_index[6]=cube[8];
+                    this.cube_index[7]=cube[5];
+                    this.cube_index[8]=cube[2];
                 }
 
-                this.cube_index[0]=cube[2];
-                this.cube_index[1]=cube[5];
-                this.cube_index[2]=cube[8];
-                this.cube_index[3]=cube[1];
-                this.cube_index[4]=cube[4];
-                this.cube_index[5]=cube[7];
-                this.cube_index[6]=cube[0];
-                this.cube_index[7]=cube[3];
-                this.cube_index[8]=cube[6];
 
                 this.angle = 0;
                 this.direction = 1;
@@ -398,6 +424,7 @@ export class Assignment2 extends Base_Scene {
 
         if (this.Top_turn) {
             let needed_index = [0, 1, 2, 9, 10, 11, 18, 19, 20];
+            let coordinate = 1;
             this.angle = this.angle + 0.25 * Math.PI * (program_state.animation_delta_time / 1000);
             if (this.angle > 0.4999*Math.PI) {
                 this.angle = Math.PI*0.5;
@@ -406,11 +433,11 @@ export class Assignment2 extends Base_Scene {
 
             for (let i = 0; i < 9; i++) {
                 let cube = this.cube_index[needed_index[i]];
-                let x = this.cube_coordinate_status[cube][1][0], y = this.cube_coordinate_status[cube][1][1], z = this.cube_coordinate_status[cube][1][2];
-                let ro = Mat4.rotation(this.angle * this.direction, x, y, z);
+                let x = this.cube_coordinate_status[cube][coordinate][0], y = this.cube_coordinate_status[cube][coordinate][1], z = this.cube_coordinate_status[cube][coordinate][2];
+                let ro = Mat4.rotation(this.angle , x* this.direction, y* this.direction, z* this.direction);
                 c[i] = this.cube_matrix[cube];
-                c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][1][3]]);
-                c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][1][3] + 1]);
+                c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
+                c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3] + 1]);
                 this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
                 //this.cube_matrix[cube]=c[i];
             }
@@ -426,26 +453,51 @@ export class Assignment2 extends Base_Scene {
                 this.pass = !this.pass;
                 let cube=[1,1,1,1,1,1,1,1,1];
 
-                for (let i=0;i < 9; i++){
-                    cube[i] = this.cube_index[needed_index[i]];
-                    this.cube_matrix[cube[i]]=c[i];
-                    let x_coordinate = this.cube_coordinate_status[cube[i]][0],z_coordinate = this.cube_coordinate_status[cube[i]][2],
-                        x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],z_negative_coordinate = this.cube_coordinate_status[cube[i]][5];
-                    this.cube_coordinate_status[cube[i]][0] = z_negative_coordinate;
-                    this.cube_coordinate_status[cube[i]][3] = z_coordinate;
-                    this.cube_coordinate_status[cube[i]][2] = x_coordinate;
-                    this.cube_coordinate_status[cube[i]][5] = x_negative_coordinate;
+                if (this.direction == -1){
+                    for (let i=0;i < 9; i++){
+                        cube[i] = this.cube_index[needed_index[i]];
+                        this.cube_matrix[cube[i]]=c[i];
+                        let x_coordinate = this.cube_coordinate_status[cube[i]][0],z_coordinate = this.cube_coordinate_status[cube[i]][2],
+                            x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],z_negative_coordinate = this.cube_coordinate_status[cube[i]][5];
+                        this.cube_coordinate_status[cube[i]][0] = z_negative_coordinate;
+                        this.cube_coordinate_status[cube[i]][3] = z_coordinate;
+                        this.cube_coordinate_status[cube[i]][2] = x_coordinate;
+                        this.cube_coordinate_status[cube[i]][5] = x_negative_coordinate;
+                    }
+
+                    this.cube_index[0]=cube[2];
+                    this.cube_index[1]=cube[5];
+                    this.cube_index[2]=cube[8];
+                    this.cube_index[9]=cube[1];
+                    this.cube_index[10]=cube[4];
+                    this.cube_index[11]=cube[7];
+                    this.cube_index[18]=cube[0];
+                    this.cube_index[19]=cube[3];
+                    this.cube_index[20]=cube[6];
+                }
+                else {
+                    for (let i=0;i < 9; i++){
+                        cube[i] = this.cube_index[needed_index[i]];
+                        this.cube_matrix[cube[i]]=c[i];
+                        let x_coordinate = this.cube_coordinate_status[cube[i]][0],z_coordinate = this.cube_coordinate_status[cube[i]][2],
+                            x_negative_coordinate = this.cube_coordinate_status[cube[i]][3],z_negative_coordinate = this.cube_coordinate_status[cube[i]][5];
+                        this.cube_coordinate_status[cube[i]][0] = z_coordinate;
+                        this.cube_coordinate_status[cube[i]][3] = z_negative_coordinate;
+                        this.cube_coordinate_status[cube[i]][2] = x_negative_coordinate;
+                        this.cube_coordinate_status[cube[i]][5] = x_coordinate;
+                    }
+
+                    this.cube_index[0]=cube[6];
+                    this.cube_index[1]=cube[3];
+                    this.cube_index[2]=cube[0];
+                    this.cube_index[9]=cube[7];
+                    this.cube_index[10]=cube[4];
+                    this.cube_index[11]=cube[1];
+                    this.cube_index[18]=cube[8];
+                    this.cube_index[19]=cube[5];
+                    this.cube_index[20]=cube[2];
                 }
 
-                this.cube_index[0]=cube[2];
-                this.cube_index[1]=cube[5];
-                this.cube_index[2]=cube[8];
-                this.cube_index[9]=cube[1];
-                this.cube_index[10]=cube[4];
-                this.cube_index[11]=cube[7];
-                this.cube_index[18]=cube[0];
-                this.cube_index[19]=cube[3];
-                this.cube_index[20]=cube[6];
 
                 this.angle = 0;
                 this.direction = 1;
