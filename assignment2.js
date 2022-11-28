@@ -110,7 +110,8 @@ class Base_Scene extends Scene {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
         this.color = [hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa")];
-        this.hover = this.front_couter_clockwise = this.Right_turn = this.Left_turn = this.Top_turn = false;
+        this.hover = this.front_couter_clockwise = this.Right_turn = this.Top_turn = this.random = false;
+        this.random_counter = 0;
         this.pass = true;
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
@@ -156,7 +157,6 @@ export class Assignment2 extends Base_Scene {
      */
     constructor() {
         super();
-        this.set_colors();
         this.angle = 0;
         this.direction = 1;
         this.cube_matrix=[
@@ -172,6 +172,112 @@ export class Assignment2 extends Base_Scene {
             Mat4.translation(-2,0,-4), Mat4.translation(0,0,-4), Mat4.translation(2,0,-4),
             Mat4.translation(-2,-2,-4), Mat4.translation(0,-2,-4), Mat4.translation(2,-2,-4)
         ];
+        this.cube_color = [[color(1,1,0,1),color(0,1,1,1),color(1,0,1,1)], //0
+            [color(1,0,1,1),color(0,1,1,1),color(1,0,1,1)],//1
+            [color(0,0,0,1),color(0,1,1,1),color(1,0,1,1)],//2
+            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],//3
+            [color(0,1,1,1),color(0,1,1,1),color(0,1,1,1)],//4
+            [color(0,0,0,1),color(0,1,1,1),color(0,1,1,1)],//5
+            [color(1,1,0,1),color(0,1,1,1),color(0,1,0,1)],//6
+            [color(0,1,0,1),color(0,1,1,1),color(0,1,1,1)],//7
+            [color(0,0,0,1),color(0,1,1,1),color(0,1,0,1)],//8
+            [color(1,0,1,1),color(1,1,0,1),color(0,1,1,1)],//9
+            [color(1,0,1,1),color(0,1,1,1),color(0,1,1,1)],//10
+            [color(1,0,1,1),color(0,0,0,1),color(0,0,0,1)],//11
+            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],//12
+            [color(1,1,0,1),color(0,1,1,1),color(0,1,1,1)],//13
+            [color(0,0,0,1),color(0,1,1,1),color(0,1,1,1)],//14
+            [color(0,1,0,1),color(1,1,0,1),color(0,1,1,1)],//15
+            [color(0,1,0,1),color(0,1,1,1),color(0,1,1,1)],//16
+            [color(0,1,0,1),color(0,0,0,1),color(0,0,0,1)],//17
+            [color(1,1,0,1),color(1,0,0,1),color(1,0,1,1)],//18
+            [color(1,0,1,1),color(1,0,0,1),color(1,0,1,1)],//19
+            [color(0,0,0,1),color(1,0,0,1),color(1,0,1,1)],//20
+            [color(1,1,0,1),color(1,0,0,1),color(0,1,1,1)],//21
+            [color(1,0,0,1),color(0,1,1,1),color(0,1,1,1)],//22
+            [color(0,0,0,1),color(1,0,0,1),color(0,1,1,1)],//23
+            [color(1,1,0,1),color(1,0,0,1),color(0,1,0,1)],//24
+            [color(0,1,0,1),color(1,0,0,1),color(0,1,1,1)],//25
+            [color(0,0,0,1),color(1,0,0,1),color(0,1,0,1)]//26
+        ];
+        this.c0_tl = [Mat4.translation(-3,2,0),Mat4.translation(-2,2,1),Mat4.translation(-2,3,0)];
+        this.c0_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
+        this.c1_tl = [Mat4.translation(0,3,0), Mat4.translation(0,2,1)];
+        this.c1_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c2_tl = [Mat4.translation(3,2,0),Mat4.translation(2,2,1),Mat4.translation(2,3,0)];
+        this.c2_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
+        this.c3_tl = [Mat4.translation(-3,0,0),Mat4.translation(-2,0,1)];
+        this.c3_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c4_tl = [Mat4.translation(0,0,1)];
+        this.c4_tsc = [Mat4.scale(0.9,0.9,0.001)];
+
+        this.c5_tl = [Mat4.translation(3,0,0),Mat4.translation(2,0,1)];
+        this.c5_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c6_tl = [Mat4.translation(-3,-2,0),Mat4.translation(-2,-2,1),Mat4.translation(-2,-3,0)];
+        this.c6_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
+        this.c7_tl = [Mat4.translation(0,-3,0),Mat4.translation(0,-2,1)];
+        this.c7_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c8_tl = [Mat4.translation(3,-2,0),Mat4.translation(2,-2,1),Mat4.translation(2,-3,0)];
+        this.c8_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
+        this.c9_tl = [Mat4.translation(-2,3,-2),Mat4.translation(-3,2,-2)];
+        this.c9_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.001,0.9,0.9)];
+
+        this.c10_tl = [Mat4.translation(0,3,-2)];
+        this.c10_tsc = [Mat4.scale(0.9,0.001,0.9)];
+
+        this.c11_tl = [Mat4.translation(2,3,-2),Mat4.translation(3,2,-2)];
+        this.c11_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.001,0.9,0.9)];
+
+        this.c12_tl = [Mat4.translation(-3,0,-2)];
+        this.c12_tsc = [Mat4.scale(0.001,0.9,0.9)];
+
+        this.c14_tl = [Mat4.translation(3,0,-2)];
+        this.c14_tsc = [Mat4.scale(0.001,0.9,0.9)];
+
+        this.c15_tl = [Mat4.translation(-2,-3,-2),Mat4.translation(-3,-2,-2)];
+        this.c15_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.001,0.9,0.9)];
+
+        this.c16_tl = [Mat4.translation(0,-3,-2)];
+        this.c16_tsc = [Mat4.scale(0.9,0.001,0.9)];
+
+        this.c17_tl = [Mat4.translation(2,-3,-2),Mat4.translation(3,-2,-2)];
+        this.c17_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.001,0.9,0.9)];
+
+        this.c18_tl = [Mat4.translation(-3,2,-4),Mat4.translation(-2,2,-5),Mat4.translation(-2,3,-4)];
+        this.c18_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
+        this.c19_tl = [Mat4.translation(0,3,-4),Mat4.translation(0,2,-5)];
+        this.c19_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c20_tl = [Mat4.translation(3,2,-4),Mat4.translation(2,2,-5),Mat4.translation(2,3,-4)];
+        this.c20_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
+        this.c21_tl = [Mat4.translation(-3,0,-4),Mat4.translation(-2,0,-5)];
+        this.c21_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c22_tl = [Mat4.translation(0,0,-5)];
+        this.c22_tsc = [Mat4.scale(0.9,0.9,0.001)];
+
+        this.c23_tl = [Mat4.translation(3,0,-4),Mat4.translation(2,0,-5)];
+        this.c23_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c24_tl = [Mat4.translation(-3,-2,-4),Mat4.translation(-2,-2,-5),Mat4.translation(-2,-3,-4)];
+        this.c24_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
+        this.c25_tl = [Mat4.translation(0,-3,-4),Mat4.translation(0,-2,-5)];
+        this.c25_tsc = [Mat4.scale(0.9,0.001,0.9),Mat4.scale(0.9,0.9,0.001)];
+
+        this.c26_tl = [Mat4.translation(3,-2,-4),Mat4.translation(2,-2,-5),Mat4.translation(2,-3,-4)];
+        this.c26_tsc = [Mat4.scale(0.001,0.9,0.9),Mat4.scale(0.9,0.9,0.001),Mat4.scale(0.9,0.001,0.9)];
+
         this.cube_coordinate_status=[
             [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
             [[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],[[1,0,0,4],[0,1,0,2],[0,0,1,0],[-1,0,0,4],[0,-1,0,2],[0,0,-1,0]],
@@ -236,43 +342,18 @@ export class Assignment2 extends Base_Scene {
             21,22,23,
             24,25,26
         ];
-        this.randomColor = [color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0),
-            color(Math.random(), Math.random(), Math.random(), 1.0)];
     }
-    set_colors() {
-        for(let i =0; i < 8; i++){
-            this.color[i] = color(Math.random(), Math.random(), Math.random(), 1.0);
-        }
-    }
+    // set_colors() {
+    //     for(let i =0; i < 8; i++){
+    //         this.color[i] = color(Math.random(), Math.random(), Math.random(), 1.0);
+    //     }
+    // }
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.key_triggered_button("Change Colors", ["c"], this.set_colors);
+        this.key_triggered_button("Randomly mess up the cube", ["c"], () => {
+            this.random = !this.random;
+        });
         // Add a button for controlling the scene.
         this.key_triggered_button("Front Turn left", ["o"], () => {
             this.front_couter_clockwise = !this.front_couter_clockwise;
@@ -318,15 +399,583 @@ export class Assignment2 extends Base_Scene {
             this.hover =! this.hover;
         });
     }
+    front_rotation_texture(context, program_state, direction) {
+        let ro = Mat4.rotation(this.angle, 0, 0, direction);
+        //rendering corner texture
+        for (let i = 0; i < 3; i++) {
+            this.shapes.cube.draw(context, program_state, ro.times(this.c0_tl[i]).times(this.c0_tsc[i]), this.materials.plastic.override({color: this.cube_color[0][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c2_tl[i]).times(this.c2_tsc[i]), this.materials.plastic.override({color: this.cube_color[2][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c6_tl[i]).times(this.c6_tsc[i]), this.materials.plastic.override({color: this.cube_color[6][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c8_tl[i]).times(this.c8_tsc[i]), this.materials.plastic.override({color: this.cube_color[8][i]}));
+            /*this.shapes.cube.draw(context, program_state,ro.times(this.c18_tl[i]).times(this.c18_tsc[i]), this.materials.plastic.override({color: this.cube_color[18][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c20_tl[i]).times(this.c20_tsc[i]), this.materials.plastic.override({color: this.cube_color[20][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c24_tl[i]).times(this.c24_tsc[i]), this.materials.plastic.override({color: this.cube_color[24][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c26_tl[i]).times(this.c26_tsc[i]), this.materials.plastic.override({color: this.cube_color[26][i]}) );*/
+        }
+        //rendering center texture
+        this.shapes.cube.draw(context, program_state, ro.times(this.c4_tl[0]).times(this.c4_tsc[0]), this.materials.plastic.override({color: this.cube_color[4][0]}));
+        /*this.shapes.cube.draw(context, program_state,ro.times(this.c10_tl[0]).times(this.c10_tsc[0]), this.materials.plastic.override({color: this.cube_color[10][0]}));
+        this.shapes.cube.draw(context, program_state,ro.times(this.c12_tl[0]).times(this.c12_tsc[0]), this.materials.plastic.override({color: this.cube_color[12][0]}));
+        this.shapes.cube.draw(context, program_state,ro.times(this.c14_tl[0]).times(this.c14_tsc[0]), this.materials.plastic.override({color: this.cube_color[14][0]}));
+        this.shapes.cube.draw(context, program_state,ro.times(this.c16_tl[0]).times(this.c16_tsc[0]), this.materials.plastic.override({color: this.cube_color[16][0]}));
+        this.shapes.cube.draw(context, program_state,ro.times(this.c22_tl[0]).times(this.c22_tsc[0]), this.materials.plastic.override({color: this.cube_color[22][0]}));*/
+        //rendering edge texture
+        for (let i = 0; i < 2; i++) {
+            this.shapes.cube.draw(context, program_state, ro.times(this.c1_tl[i]).times(this.c1_tsc[i]), this.materials.plastic.override({color: this.cube_color[1][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c3_tl[i]).times(this.c3_tsc[i]), this.materials.plastic.override({color: this.cube_color[3][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c5_tl[i]).times(this.c5_tsc[i]), this.materials.plastic.override({color: this.cube_color[5][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c7_tl[i]).times(this.c7_tsc[i]), this.materials.plastic.override({color: this.cube_color[7][i]}));
+            /*this.shapes.cube.draw(context, program_state,ro.times(this.c9_tl[i]).times(this.c9_tsc[i]), this.materials.plastic.override({color: this.cube_color[9][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c11_tl[i]).times(this.c11_tsc[i]), this.materials.plastic.override({color: this.cube_color[11][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c15_tl[i]).times(this.c15_tsc[i]), this.materials.plastic.override({color: this.cube_color[15][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c17_tl[i]).times(this.c17_tsc[i]), this.materials.plastic.override({color: this.cube_color[17][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c19_tl[i]).times(this.c19_tsc[i]), this.materials.plastic.override({color: this.cube_color[19][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c21_tl[i]).times(this.c21_tsc[i]), this.materials.plastic.override({color: this.cube_color[21][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c23_tl[i]).times(this.c23_tsc[i]), this.materials.plastic.override({color: this.cube_color[23][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c25_tl[i]).times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );*/
+        }
+        //end
+        //rendering textures that don't turn
+        //rendering corner cube texture
+        for(let i=0; i<3; i++){
+            this.shapes.cube.draw(context, program_state,this.c18_tl[i].times(this.c18_tsc[i]), this.materials.plastic.override({color: this.cube_color[18][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c20_tl[i].times(this.c20_tsc[i]), this.materials.plastic.override({color: this.cube_color[20][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c24_tl[i].times(this.c24_tsc[i]), this.materials.plastic.override({color: this.cube_color[24][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c26_tl[i].times(this.c26_tsc[i]), this.materials.plastic.override({color: this.cube_color[26][i]}) );
+        }
+        //rendering middle cube texture
+        this.shapes.cube.draw(context, program_state,this.c10_tl[0].times(this.c10_tsc[0]), this.materials.plastic.override({color: this.cube_color[10][0]}));
+        this.shapes.cube.draw(context, program_state,this.c12_tl[0].times(this.c12_tsc[0]), this.materials.plastic.override({color: this.cube_color[12][0]}));
+        this.shapes.cube.draw(context, program_state,this.c14_tl[0].times(this.c14_tsc[0]), this.materials.plastic.override({color: this.cube_color[14][0]}));
+        this.shapes.cube.draw(context, program_state,this.c16_tl[0].times(this.c16_tsc[0]), this.materials.plastic.override({color: this.cube_color[16][0]}));
+        this.shapes.cube.draw(context, program_state,this.c22_tl[0].times(this.c22_tsc[0]), this.materials.plastic.override({color: this.cube_color[22][0]}));
+        //rendering edge cube texture
+        for(let i=0; i<2; i++){
+            this.shapes.cube.draw(context, program_state,this.c9_tl[i].times(this.c9_tsc[i]), this.materials.plastic.override({color: this.cube_color[9][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c11_tl[i].times(this.c11_tsc[i]), this.materials.plastic.override({color: this.cube_color[11][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c15_tl[i].times(this.c15_tsc[i]), this.materials.plastic.override({color: this.cube_color[15][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c17_tl[i].times(this.c17_tsc[i]), this.materials.plastic.override({color: this.cube_color[17][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c19_tl[i].times(this.c19_tsc[i]), this.materials.plastic.override({color: this.cube_color[19][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c21_tl[i].times(this.c21_tsc[i]), this.materials.plastic.override({color: this.cube_color[21][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c23_tl[i].times(this.c23_tsc[i]), this.materials.plastic.override({color: this.cube_color[23][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c25_tl[i].times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );
+        }
+    }
+    front_rotation_texture_update(direction){
+        /*update texture location */
+        let temp1 = this.cube_color[0];
+        let temp2 = this.cube_color[2];
+        let temp3 = this.cube_color[6];
+        let temp4 = this.cube_color[8];
+        if(direction == 1){
+            this.cube_color[0] =  temp2;
+            let temp = this.cube_color[0][0];
+            this.cube_color[0][0] = this.cube_color[0][2];
+            this.cube_color[0][2] = temp;
 
+            this.cube_color[2] =  temp4;
+            temp = this.cube_color[2][0];
+            this.cube_color[2][0] = this.cube_color[2][2];
+            this.cube_color[2][2] = temp;
+
+            this.cube_color[6] =  temp1;
+            temp = this.cube_color[6][0];
+            this.cube_color[6][0] = this.cube_color[6][2];
+            this.cube_color[6][2] = temp;
+
+            this.cube_color[8] =  temp3;
+            temp = this.cube_color[8][0];
+            this.cube_color[8][0] = this.cube_color[8][2];
+            this.cube_color[8][2] = temp;
+
+            temp1 = this.cube_color[1];
+            temp2 = this.cube_color[3];
+            temp3 = this.cube_color[5];
+            temp4 = this.cube_color[7];
+            this.cube_color[1] = temp3;
+            this.cube_color[3]= temp1;
+            this.cube_color[5] = temp4;
+            this.cube_color[7] = temp2;
+        }else{
+            this.cube_color[0] =  temp3;
+            let temp = this.cube_color[0][0];
+            this.cube_color[0][0] = this.cube_color[0][2];
+            this.cube_color[0][2] = temp;
+
+            this.cube_color[2] =  temp1;
+            temp = this.cube_color[2][0];
+            this.cube_color[2][0] = this.cube_color[2][2];
+            this.cube_color[2][2] = temp;
+
+            this.cube_color[6] =  temp4;
+            temp = this.cube_color[6][0];
+            this.cube_color[6][0] = this.cube_color[6][2];
+            this.cube_color[6][2] = temp;
+
+            this.cube_color[8] =  temp2;
+            temp = this.cube_color[8][0];
+            this.cube_color[8][0] = this.cube_color[8][2];
+            this.cube_color[8][2] = temp;
+
+            temp1 = this.cube_color[1];
+            temp2 = this.cube_color[3];
+            temp3 = this.cube_color[5];
+            temp4 = this.cube_color[7];
+            this.cube_color[1] = temp2;
+            this.cube_color[3]= temp4;
+            this.cube_color[5] = temp1;
+            this.cube_color[7] = temp3;
+        }
+
+    }
+    top_rotation_texture(context, program_state, direction) {
+        let ro = Mat4.translation(0,0,-2).times(Mat4.rotation(this.angle, 0, direction, 0)).times(Mat4.translation(0,0,2));
+        //rendering corner texture
+        for (let i = 0; i < 3; i++) {
+            this.shapes.cube.draw(context, program_state, ro.times(this.c0_tl[i]).times(this.c0_tsc[i]), this.materials.plastic.override({color: this.cube_color[0][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c2_tl[i]).times(this.c2_tsc[i]), this.materials.plastic.override({color: this.cube_color[2][i]}));
+            this.shapes.cube.draw(context, program_state,ro.times(this.c18_tl[i]).times(this.c18_tsc[i]), this.materials.plastic.override({color: this.cube_color[18][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c20_tl[i]).times(this.c20_tsc[i]), this.materials.plastic.override({color: this.cube_color[20][i]}) );
+        }
+        //rendering center texture
+        this.shapes.cube.draw(context, program_state,ro.times(this.c10_tl[0]).times(this.c10_tsc[0]), this.materials.plastic.override({color: this.cube_color[10][0]}));
+        //rendering edge texture
+        for (let i = 0; i < 2; i++) {
+            this.shapes.cube.draw(context, program_state, ro.times(this.c1_tl[i]).times(this.c1_tsc[i]), this.materials.plastic.override({color: this.cube_color[1][i]}));
+            this.shapes.cube.draw(context, program_state,ro.times(this.c9_tl[i]).times(this.c9_tsc[i]), this.materials.plastic.override({color: this.cube_color[9][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c11_tl[i]).times(this.c11_tsc[i]), this.materials.plastic.override({color: this.cube_color[11][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c19_tl[i]).times(this.c19_tsc[i]), this.materials.plastic.override({color: this.cube_color[19][i]}) );
+        }
+        //end
+        //rendering textures that don't turn
+        //rendering corner cube texture
+        for(let i=0; i<3; i++){
+            this.shapes.cube.draw(context, program_state,this.c6_tl[i].times(this.c6_tsc[i]), this.materials.plastic.override({color: this.cube_color[6][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c8_tl[i].times(this.c8_tsc[i]), this.materials.plastic.override({color: this.cube_color[8][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c24_tl[i].times(this.c24_tsc[i]), this.materials.plastic.override({color: this.cube_color[24][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c26_tl[i].times(this.c26_tsc[i]), this.materials.plastic.override({color: this.cube_color[26][i]}) );
+        }
+        //rendering middle cube texture
+        this.shapes.cube.draw(context, program_state,this.c4_tl[0].times(this.c4_tsc[0]), this.materials.plastic.override({color: this.cube_color[4][0]}));
+        this.shapes.cube.draw(context, program_state,this.c12_tl[0].times(this.c12_tsc[0]), this.materials.plastic.override({color: this.cube_color[12][0]}));
+        this.shapes.cube.draw(context, program_state,this.c14_tl[0].times(this.c14_tsc[0]), this.materials.plastic.override({color: this.cube_color[14][0]}));
+        this.shapes.cube.draw(context, program_state,this.c16_tl[0].times(this.c16_tsc[0]), this.materials.plastic.override({color: this.cube_color[16][0]}));
+        this.shapes.cube.draw(context, program_state,this.c22_tl[0].times(this.c22_tsc[0]), this.materials.plastic.override({color: this.cube_color[22][0]}));
+        //rendering edge cube texture
+        for(let i=0; i<2; i++){
+            this.shapes.cube.draw(context, program_state,this.c3_tl[i].times(this.c3_tsc[i]), this.materials.plastic.override({color: this.cube_color[3][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c5_tl[i].times(this.c5_tsc[i]), this.materials.plastic.override({color: this.cube_color[5][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c7_tl[i].times(this.c7_tsc[i]), this.materials.plastic.override({color: this.cube_color[7][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c15_tl[i].times(this.c15_tsc[i]), this.materials.plastic.override({color: this.cube_color[15][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c17_tl[i].times(this.c17_tsc[i]), this.materials.plastic.override({color: this.cube_color[17][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c21_tl[i].times(this.c21_tsc[i]), this.materials.plastic.override({color: this.cube_color[21][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c23_tl[i].times(this.c23_tsc[i]), this.materials.plastic.override({color: this.cube_color[23][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c25_tl[i].times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );
+        }
+    }
+    top_rotation_texture_update(direction){ //corner: 0 2 18 20; edge: 1 9 11 19
+        /*update texture location */
+        let temp1 = this.cube_color[0];
+        let temp2 = this.cube_color[2];
+        let temp3 = this.cube_color[18];
+        let temp4 = this.cube_color[20];
+        if(direction == 1){
+            this.cube_color[0] =  temp3;
+            let temp = this.cube_color[0][0];
+            this.cube_color[0][0] = this.cube_color[0][1];
+            this.cube_color[0][1] = temp;
+
+            this.cube_color[2] =  temp1;
+            temp = this.cube_color[2][0];
+            this.cube_color[2][0] = this.cube_color[2][1];
+            this.cube_color[2][1] = temp;
+
+            this.cube_color[20] =  temp2;
+            temp = this.cube_color[20][0];
+            this.cube_color[20][0] = this.cube_color[20][1];
+            this.cube_color[20][1] = temp;
+
+            this.cube_color[18] =  temp4;
+            temp = this.cube_color[18][0];
+            this.cube_color[18][0] = this.cube_color[18][1];
+            this.cube_color[18][1] = temp;
+
+            temp1 = this.cube_color[1];
+            temp2 = this.cube_color[9];
+            temp3 = this.cube_color[11];
+            temp4 = this.cube_color[19];
+            this.cube_color[1] = temp2;
+            this.cube_color[9]= temp4;
+            this.cube_color[11] = temp1;
+            this.cube_color[19] = temp3;
+        }else{
+            this.cube_color[0] =  temp2;
+            let temp = this.cube_color[0][0];
+            this.cube_color[0][0] = this.cube_color[0][1];
+            this.cube_color[0][1] = temp;
+
+            this.cube_color[2] =  temp4;
+            temp = this.cube_color[2][0];
+            this.cube_color[2][0] = this.cube_color[2][1];
+            this.cube_color[2][1] = temp;
+
+            this.cube_color[20] =  temp3;
+            temp = this.cube_color[20][0];
+            this.cube_color[20][0] = this.cube_color[20][1];
+            this.cube_color[20][1] = temp;
+
+            this.cube_color[18] =  temp1;
+            temp = this.cube_color[18][0];
+            this.cube_color[18][0] = this.cube_color[18][1];
+            this.cube_color[18][1] = temp;
+
+            temp1 = this.cube_color[1];
+            temp2 = this.cube_color[9];
+            temp3 = this.cube_color[11];
+            temp4 = this.cube_color[19];
+            this.cube_color[1] = temp3;
+            this.cube_color[9]= temp1;
+            this.cube_color[11] = temp4;
+            this.cube_color[19] = temp2;
+        }
+
+    }
+    left_rotation_texture(context, program_state, direction) {// 18 0 24 6; 3 9 15 21;
+        let ro = Mat4.translation(-2,0,-2).times(Mat4.rotation(this.angle, direction, 0, 0)).times(Mat4.translation(2,0,2));
+        //rendering corner texture
+        for (let i = 0; i < 3; i++) {
+            this.shapes.cube.draw(context, program_state, ro.times(this.c0_tl[i]).times(this.c0_tsc[i]), this.materials.plastic.override({color: this.cube_color[0][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c6_tl[i]).times(this.c6_tsc[i]), this.materials.plastic.override({color: this.cube_color[6][i]}));
+            this.shapes.cube.draw(context, program_state,ro.times(this.c18_tl[i]).times(this.c18_tsc[i]), this.materials.plastic.override({color: this.cube_color[18][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c24_tl[i]).times(this.c24_tsc[i]), this.materials.plastic.override({color: this.cube_color[24][i]}) );
+
+        }
+        //rendering center texture
+        this.shapes.cube.draw(context, program_state,ro.times(this.c12_tl[0]).times(this.c12_tsc[0]), this.materials.plastic.override({color: this.cube_color[12][0]}));
+        //rendering edge texture
+        for (let i = 0; i < 2; i++) {
+            this.shapes.cube.draw(context, program_state, ro.times(this.c3_tl[i]).times(this.c3_tsc[i]), this.materials.plastic.override({color: this.cube_color[3][i]}));
+            this.shapes.cube.draw(context, program_state,ro.times(this.c9_tl[i]).times(this.c9_tsc[i]), this.materials.plastic.override({color: this.cube_color[9][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c15_tl[i]).times(this.c15_tsc[i]), this.materials.plastic.override({color: this.cube_color[15][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c21_tl[i]).times(this.c21_tsc[i]), this.materials.plastic.override({color: this.cube_color[21][i]}) );
+            /*this.shapes.cube.draw(context, program_state,ro.times(this.c9_tl[i]).times(this.c9_tsc[i]), this.materials.plastic.override({color: this.cube_color[9][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c11_tl[i]).times(this.c11_tsc[i]), this.materials.plastic.override({color: this.cube_color[11][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c15_tl[i]).times(this.c15_tsc[i]), this.materials.plastic.override({color: this.cube_color[15][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c17_tl[i]).times(this.c17_tsc[i]), this.materials.plastic.override({color: this.cube_color[17][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c19_tl[i]).times(this.c19_tsc[i]), this.materials.plastic.override({color: this.cube_color[19][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c21_tl[i]).times(this.c21_tsc[i]), this.materials.plastic.override({color: this.cube_color[21][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c23_tl[i]).times(this.c23_tsc[i]), this.materials.plastic.override({color: this.cube_color[23][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c25_tl[i]).times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );*/
+        }
+        //end
+        //rendering textures that don't turn
+        //rendering corner cube texture
+        for(let i=0; i<3; i++){
+            this.shapes.cube.draw(context, program_state,this.c2_tl[i].times(this.c2_tsc[i]), this.materials.plastic.override({color: this.cube_color[2][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c8_tl[i].times(this.c8_tsc[i]), this.materials.plastic.override({color: this.cube_color[8][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c20_tl[i].times(this.c20_tsc[i]), this.materials.plastic.override({color: this.cube_color[20][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c26_tl[i].times(this.c26_tsc[i]), this.materials.plastic.override({color: this.cube_color[26][i]}) );
+        }
+        //rendering middle cube texture
+        this.shapes.cube.draw(context, program_state,this.c10_tl[0].times(this.c10_tsc[0]), this.materials.plastic.override({color: this.cube_color[10][0]}));
+        this.shapes.cube.draw(context, program_state,this.c4_tl[0].times(this.c4_tsc[0]), this.materials.plastic.override({color: this.cube_color[4][0]}));
+        this.shapes.cube.draw(context, program_state,this.c14_tl[0].times(this.c14_tsc[0]), this.materials.plastic.override({color: this.cube_color[14][0]}));
+        this.shapes.cube.draw(context, program_state,this.c16_tl[0].times(this.c16_tsc[0]), this.materials.plastic.override({color: this.cube_color[16][0]}));
+        this.shapes.cube.draw(context, program_state,this.c22_tl[0].times(this.c22_tsc[0]), this.materials.plastic.override({color: this.cube_color[22][0]}));
+        //rendering edge cube texture
+        for(let i=0; i<2; i++){
+            this.shapes.cube.draw(context, program_state,this.c1_tl[i].times(this.c1_tsc[i]), this.materials.plastic.override({color: this.cube_color[1][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c11_tl[i].times(this.c11_tsc[i]), this.materials.plastic.override({color: this.cube_color[11][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c7_tl[i].times(this.c7_tsc[i]), this.materials.plastic.override({color: this.cube_color[7][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c17_tl[i].times(this.c17_tsc[i]), this.materials.plastic.override({color: this.cube_color[17][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c19_tl[i].times(this.c19_tsc[i]), this.materials.plastic.override({color: this.cube_color[19][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c5_tl[i].times(this.c5_tsc[i]), this.materials.plastic.override({color: this.cube_color[5][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c23_tl[i].times(this.c23_tsc[i]), this.materials.plastic.override({color: this.cube_color[23][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c25_tl[i].times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );
+        }
+    }
+    left_rotation_texture_update(direction){ // 18 0 24 6; 3 9 15 21;
+        /*update texture location */
+        let temp1 = this.cube_color[18];
+        let temp2 = this.cube_color[0];
+        let temp3 = this.cube_color[24];
+        let temp4 = this.cube_color[6];
+        if(direction == 1){
+            this.cube_color[18] =  temp3;
+            let temp = this.cube_color[18][1];
+            this.cube_color[18][1] = this.cube_color[18][2];
+            this.cube_color[18][2] = temp;
+
+            this.cube_color[0] =  temp1;
+            temp = this.cube_color[0][1];
+            this.cube_color[0][1] = this.cube_color[0][2];
+            this.cube_color[0][2] = temp;
+
+            this.cube_color[24] =  temp4;
+            temp = this.cube_color[24][1];
+            this.cube_color[24][1] = this.cube_color[24][2];
+            this.cube_color[24][2] = temp;
+
+            this.cube_color[6] =  temp2;
+            temp = this.cube_color[6][1];
+            this.cube_color[6][1] = this.cube_color[6][2];
+            this.cube_color[6][2] = temp;
+
+            temp1 = this.cube_color[3];
+            temp2 = this.cube_color[9];
+            temp3 = this.cube_color[15];
+            temp4 = this.cube_color[21];
+            this.cube_color[21] = temp3;
+            temp = this.cube_color[21][0];
+            this.cube_color[21][0] = this.cube_color[21][1];
+            this.cube_color[21][1] = temp;
+
+            this.cube_color[3]= temp2;
+            temp = this.cube_color[3][0];
+            this.cube_color[3][0] = this.cube_color[3][1];
+            this.cube_color[3][1] = temp;
+
+            this.cube_color[15] = temp1;
+            temp = this.cube_color[15][0];
+            this.cube_color[15][0] = this.cube_color[15][1];
+            this.cube_color[15][1] = temp;
+
+            this.cube_color[9] = temp4;
+            temp = this.cube_color[9][0];
+            this.cube_color[9][0] = this.cube_color[9][1];
+            this.cube_color[9][1] = temp;
+        }else{
+            this.cube_color[18] =  temp2;
+            let temp = this.cube_color[18][1];
+            this.cube_color[18][1] = this.cube_color[18][2];
+            this.cube_color[18][2] = temp;
+
+            this.cube_color[0] =  temp4;
+            temp = this.cube_color[0][1];
+            this.cube_color[0][1] = this.cube_color[0][2];
+            this.cube_color[0][2] = temp;
+
+            this.cube_color[24] =  temp1;
+            temp = this.cube_color[24][1];
+            this.cube_color[24][1] = this.cube_color[24][2];
+            this.cube_color[24][2] = temp;
+
+            this.cube_color[6] =  temp3;
+            temp = this.cube_color[6][1];
+            this.cube_color[6][1] = this.cube_color[6][2];
+            this.cube_color[6][2] = temp;
+
+            temp1 = this.cube_color[3];
+            temp2 = this.cube_color[9];
+            temp3 = this.cube_color[15];
+            temp4 = this.cube_color[21];
+            this.cube_color[21] = temp2;
+            temp = this.cube_color[21][0];
+            this.cube_color[21][0] = this.cube_color[21][1];
+            this.cube_color[21][1] = temp;
+            this.cube_color[3]= temp3;
+            temp = this.cube_color[3][0];
+            this.cube_color[3][0] = this.cube_color[3][1];
+            this.cube_color[3][1] = temp;
+            this.cube_color[15] = temp4;
+            temp = this.cube_color[15][0];
+            this.cube_color[15][0] = this.cube_color[15][1];
+            this.cube_color[15][1] = temp;
+            this.cube_color[9] = temp1;
+            temp = this.cube_color[9][0];
+            this.cube_color[9][0] = this.cube_color[9][1];
+            this.cube_color[9][1] = temp;
+        }
+
+    }
+    right_rotation_texture(context, program_state, direction) {//2 20 8 26; 11 5 23 17
+        let ro = Mat4.translation(2,0,-2).times(Mat4.rotation(this.angle, direction, 0, 0)).times(Mat4.translation(-2,0,2));
+        //rendering corner texture
+        for (let i = 0; i < 3; i++) {
+
+            this.shapes.cube.draw(context, program_state, ro.times(this.c2_tl[i]).times(this.c2_tsc[i]), this.materials.plastic.override({color: this.cube_color[2][i]}));
+            this.shapes.cube.draw(context, program_state, ro.times(this.c8_tl[i]).times(this.c8_tsc[i]), this.materials.plastic.override({color: this.cube_color[8][i]}));
+            this.shapes.cube.draw(context, program_state,ro.times(this.c20_tl[i]).times(this.c20_tsc[i]), this.materials.plastic.override({color: this.cube_color[20][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c26_tl[i]).times(this.c26_tsc[i]), this.materials.plastic.override({color: this.cube_color[26][i]}) );
+
+        }
+        //rendering center texture
+        this.shapes.cube.draw(context, program_state,ro.times(this.c14_tl[0]).times(this.c14_tsc[0]), this.materials.plastic.override({color: this.cube_color[14][0]}));
+        //rendering edge texture
+        for (let i = 0; i < 2; i++) {
+            this.shapes.cube.draw(context, program_state, ro.times(this.c5_tl[i]).times(this.c5_tsc[i]), this.materials.plastic.override({color: this.cube_color[5][i]}));
+            this.shapes.cube.draw(context, program_state,ro.times(this.c11_tl[i]).times(this.c11_tsc[i]), this.materials.plastic.override({color: this.cube_color[11][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c17_tl[i]).times(this.c17_tsc[i]), this.materials.plastic.override({color: this.cube_color[17][i]}) );
+            this.shapes.cube.draw(context, program_state,ro.times(this.c23_tl[i]).times(this.c23_tsc[i]), this.materials.plastic.override({color: this.cube_color[23][i]}) );
+
+        }
+        //end
+        //rendering textures that don't turn
+        //rendering corner cube texture
+        for(let i=0; i<3; i++){
+            this.shapes.cube.draw(context, program_state,this.c0_tl[i].times(this.c0_tsc[i]), this.materials.plastic.override({color: this.cube_color[0][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c6_tl[i].times(this.c6_tsc[i]), this.materials.plastic.override({color: this.cube_color[6][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c18_tl[i].times(this.c18_tsc[i]), this.materials.plastic.override({color: this.cube_color[18][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c24_tl[i].times(this.c24_tsc[i]), this.materials.plastic.override({color: this.cube_color[24][i]}) );
+        }
+        //rendering middle cube texture
+        this.shapes.cube.draw(context, program_state,this.c10_tl[0].times(this.c10_tsc[0]), this.materials.plastic.override({color: this.cube_color[10][0]}));
+        this.shapes.cube.draw(context, program_state,this.c4_tl[0].times(this.c4_tsc[0]), this.materials.plastic.override({color: this.cube_color[4][0]}));
+        this.shapes.cube.draw(context, program_state,this.c12_tl[0].times(this.c12_tsc[0]), this.materials.plastic.override({color: this.cube_color[12][0]}));
+        this.shapes.cube.draw(context, program_state,this.c16_tl[0].times(this.c16_tsc[0]), this.materials.plastic.override({color: this.cube_color[16][0]}));
+        this.shapes.cube.draw(context, program_state,this.c22_tl[0].times(this.c22_tsc[0]), this.materials.plastic.override({color: this.cube_color[22][0]}));
+        //rendering edge cube texture
+        for(let i=0; i<2; i++){
+            this.shapes.cube.draw(context, program_state,this.c1_tl[i].times(this.c1_tsc[i]), this.materials.plastic.override({color: this.cube_color[1][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c9_tl[i].times(this.c9_tsc[i]), this.materials.plastic.override({color: this.cube_color[9][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c7_tl[i].times(this.c7_tsc[i]), this.materials.plastic.override({color: this.cube_color[7][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c3_tl[i].times(this.c3_tsc[i]), this.materials.plastic.override({color: this.cube_color[3][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c19_tl[i].times(this.c19_tsc[i]), this.materials.plastic.override({color: this.cube_color[19][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c15_tl[i].times(this.c15_tsc[i]), this.materials.plastic.override({color: this.cube_color[15][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c21_tl[i].times(this.c21_tsc[i]), this.materials.plastic.override({color: this.cube_color[21][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c25_tl[i].times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );
+        }
+    }
+    right_rotation_texture_update(direction){ //2 20 8 26; 11 5 23 17
+        /*update texture location */
+        let temp1 = this.cube_color[2];
+        let temp2 = this.cube_color[20];
+        let temp3 = this.cube_color[8];
+        let temp4 = this.cube_color[26];
+        if(direction == 1){
+            this.cube_color[2] =  temp2;
+            let temp = this.cube_color[2][2];
+            this.cube_color[2][2] = this.cube_color[2][1];
+            this.cube_color[2][1] = temp;
+
+            this.cube_color[20] =  temp4;
+            temp = this.cube_color[20][1];
+            this.cube_color[20][1] = this.cube_color[20][2];
+            this.cube_color[20][2] = temp;
+
+            this.cube_color[8] =  temp1;
+            temp = this.cube_color[8][1];
+            this.cube_color[8][1] = this.cube_color[8][2];
+            this.cube_color[8][2] = temp;
+
+            this.cube_color[26] =  temp3;
+            temp = this.cube_color[26][1];
+            this.cube_color[26][1] = this.cube_color[26][2];
+            this.cube_color[26][2] = temp;
+
+            temp1 = this.cube_color[11];
+            temp2 = this.cube_color[5];
+            temp3 = this.cube_color[23];
+            temp4 = this.cube_color[17];
+
+            this.cube_color[11] = temp3;
+            temp = this.cube_color[11][1];
+            this.cube_color[11][1] = this.cube_color[11][0];
+            this.cube_color[11][0] = temp;
+
+            this.cube_color[5]= temp1;
+            temp = this.cube_color[5][1];
+            this.cube_color[5][1] = this.cube_color[5][0];
+            this.cube_color[5][0] = temp;
+
+            this.cube_color[23] = temp4;
+            temp = this.cube_color[23][1];
+            this.cube_color[23][1] = this.cube_color[23][0];
+            this.cube_color[23][0] = temp;
+
+            this.cube_color[17] = temp2;
+            temp = this.cube_color[17][1];
+            this.cube_color[17][1] = this.cube_color[17][0];
+            this.cube_color[17][0] = temp;
+
+        }else{
+            this.cube_color[2] =  temp3;
+            let temp = this.cube_color[2][2];
+            this.cube_color[2][2] = this.cube_color[2][1];
+            this.cube_color[2][1] = temp;
+
+            this.cube_color[20] =  temp1;
+            temp = this.cube_color[20][1];
+            this.cube_color[20][1] = this.cube_color[20][2];
+            this.cube_color[20][2] = temp;
+
+            this.cube_color[8] =  temp4;
+            temp = this.cube_color[8][1];
+            this.cube_color[8][1] = this.cube_color[8][2];
+            this.cube_color[8][2] = temp;
+
+            this.cube_color[26] =  temp2;
+            temp = this.cube_color[26][1];
+            this.cube_color[26][1] = this.cube_color[26][2];
+            this.cube_color[26][2] = temp;
+
+            temp1 = this.cube_color[11];
+            temp2 = this.cube_color[5];
+            temp3 = this.cube_color[23];
+            temp4 = this.cube_color[17];
+
+            this.cube_color[11] = temp2;
+            temp = this.cube_color[11][1];
+            this.cube_color[11][1] = this.cube_color[11][0];
+            this.cube_color[11][0] = temp;
+
+            this.cube_color[5]= temp4;
+            temp = this.cube_color[5][1];
+            this.cube_color[5][1] = this.cube_color[5][0];
+            this.cube_color[5][0] = temp;
+
+            this.cube_color[23] = temp1;
+            temp = this.cube_color[23][1];
+            this.cube_color[23][1] = this.cube_color[23][0];
+            this.cube_color[23][0] = temp;
+
+            this.cube_color[17] = temp3;
+            temp = this.cube_color[17][1];
+            this.cube_color[17][1] = this.cube_color[17][0];
+            this.cube_color[17][0] = temp;
+        }
+
+    }
+    idle_texture(context, program_state){
+        //rendering corner cube texture
+        for(let i=0; i<3; i++){
+            this.shapes.cube.draw(context, program_state,this.c0_tl[i].times(this.c0_tsc[i]), this.materials.plastic.override({color: this.cube_color[0][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c2_tl[i].times(this.c2_tsc[i]), this.materials.plastic.override({color: this.cube_color[2][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c6_tl[i].times(this.c6_tsc[i]), this.materials.plastic.override({color: this.cube_color[6][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c8_tl[i].times(this.c8_tsc[i]), this.materials.plastic.override({color: this.cube_color[8][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c18_tl[i].times(this.c18_tsc[i]), this.materials.plastic.override({color: this.cube_color[18][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c20_tl[i].times(this.c20_tsc[i]), this.materials.plastic.override({color: this.cube_color[20][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c24_tl[i].times(this.c24_tsc[i]), this.materials.plastic.override({color: this.cube_color[24][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c26_tl[i].times(this.c26_tsc[i]), this.materials.plastic.override({color: this.cube_color[26][i]}) );
+        }
+        //rendering middle cubes
+        this.shapes.cube.draw(context, program_state,this.c4_tl[0].times(this.c4_tsc[0]), this.materials.plastic.override({color: this.cube_color[4][0]}));
+        this.shapes.cube.draw(context, program_state,this.c10_tl[0].times(this.c10_tsc[0]), this.materials.plastic.override({color: this.cube_color[10][0]}));
+        this.shapes.cube.draw(context, program_state,this.c12_tl[0].times(this.c12_tsc[0]), this.materials.plastic.override({color: this.cube_color[12][0]}));
+        this.shapes.cube.draw(context, program_state,this.c14_tl[0].times(this.c14_tsc[0]), this.materials.plastic.override({color: this.cube_color[14][0]}));
+        this.shapes.cube.draw(context, program_state,this.c16_tl[0].times(this.c16_tsc[0]), this.materials.plastic.override({color: this.cube_color[16][0]}));
+        this.shapes.cube.draw(context, program_state,this.c22_tl[0].times(this.c22_tsc[0]), this.materials.plastic.override({color: this.cube_color[22][0]}));
+        //rendering edge cubes
+        for(let i=0; i<2; i++){
+            this.shapes.cube.draw(context, program_state,this.c1_tl[i].times(this.c1_tsc[i]), this.materials.plastic.override({color: this.cube_color[1][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c3_tl[i].times(this.c3_tsc[i]), this.materials.plastic.override({color: this.cube_color[3][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c5_tl[i].times(this.c5_tsc[i]), this.materials.plastic.override({color: this.cube_color[5][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c7_tl[i].times(this.c7_tsc[i]), this.materials.plastic.override({color: this.cube_color[7][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c9_tl[i].times(this.c9_tsc[i]), this.materials.plastic.override({color: this.cube_color[9][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c11_tl[i].times(this.c11_tsc[i]), this.materials.plastic.override({color: this.cube_color[11][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c15_tl[i].times(this.c15_tsc[i]), this.materials.plastic.override({color: this.cube_color[15][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c17_tl[i].times(this.c17_tsc[i]), this.materials.plastic.override({color: this.cube_color[17][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c19_tl[i].times(this.c19_tsc[i]), this.materials.plastic.override({color: this.cube_color[19][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c21_tl[i].times(this.c21_tsc[i]), this.materials.plastic.override({color: this.cube_color[21][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c23_tl[i].times(this.c23_tsc[i]), this.materials.plastic.override({color: this.cube_color[23][i]}) );
+            this.shapes.cube.draw(context, program_state,this.c25_tl[i].times(this.c25_tsc[i]), this.materials.plastic.override({color: this.cube_color[25][i]}) );
+        }
+    }
 
     display(context, program_state) {
         super.display(context, program_state);
         const blue = hex_color("#1a9ffa"), yellow = hex_color("#fdc03a");
         let model_transform = Mat4.identity();
-
-        /*Requirement 3*/
-        // TODO:  Draw your entire scene here.  Use this.draw_box( graphics_state, model_transform ) to call your helper.
 
         let t = program_state.animation_time/1000; //ms->s
         let dt = program_state.animation_delta_time/1000;
@@ -342,7 +991,38 @@ export class Assignment2 extends Base_Scene {
         //let angle = this.angle = 0.25*Math.PI*(Math.sin((2*Math.PI/1)*program_state.animation_time / 1000)+1);
         //let angle = this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
 
-        let degree = 0;
+        if(this.random && !this.front_couter_clockwise && !this.Top_turn && !this.Left_turn && !this.Right_turn){
+            let random_operation = Math.floor(Math.random()*4);
+            let random_direction = Math.floor(Math.random()*2);
+
+            switch (random_operation){
+                case 0:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 1:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 2:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 3:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+            }
+
+            if (random_direction == 1){
+                this.direction = -1;
+            }
+
+            this.random_counter = this.random_counter+1;
+            this.pass = !this.pass;
+
+            if (this.random_counter == 11){
+                this.random = !this.random;
+                this.random_counter = 0;
+            }
+
+        }
 
         if (this.front_couter_clockwise){
             let needed_index=[0,1,2,3,4,5,6,7,8];
@@ -351,8 +1031,8 @@ export class Assignment2 extends Base_Scene {
             if (this.angle > 0.4999*Math.PI) {
                 this.angle = Math.PI*0.5;
             }
+            this.front_rotation_texture(context, program_state, this.direction);
             let c=[Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity(),Mat4.identity()];
-
             for (let i=0; i < 9; i++){
                 let cube=this.cube_index[needed_index[i]];
                 let x=this.cube_coordinate_status[cube][coordinate][0],y=this.cube_coordinate_status[cube][coordinate][1],z=this.cube_coordinate_status[cube][coordinate][2];
@@ -360,13 +1040,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]+1]);
-                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
+                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic);
                 }
             }
 
@@ -422,6 +1102,7 @@ export class Assignment2 extends Base_Scene {
 
 
                 this.angle = 0;
+                this.front_rotation_texture_update(this.direction);
                 this.direction = 1;
             }
         }
@@ -433,8 +1114,8 @@ export class Assignment2 extends Base_Scene {
             if (this.angle > 0.4999*Math.PI) {
                 this.angle = Math.PI*0.5;
             }
+            this.top_rotation_texture(context,program_state,this.direction);
             let c = [Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity()];
-
             for (let i = 0; i < 9; i++) {
                 let cube = this.cube_index[needed_index[i]];
                 let x = this.cube_coordinate_status[cube][coordinate][0], y = this.cube_coordinate_status[cube][coordinate][1], z = this.cube_coordinate_status[cube][coordinate][2];
@@ -442,13 +1123,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3] + 1]);
-                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
+                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic);
                 }
             }
 
@@ -456,7 +1137,6 @@ export class Assignment2 extends Base_Scene {
                 this.Top_turn = !this.Top_turn;
                 this.pass = !this.pass;
                 let cube=[1,1,1,1,1,1,1,1,1];
-
                 if (this.direction == -1){
                     for (let i=0;i < 9; i++){
                         cube[i] = this.cube_index[needed_index[i]];
@@ -504,6 +1184,7 @@ export class Assignment2 extends Base_Scene {
 
 
                 this.angle = 0;
+                this.top_rotation_texture_update(this.direction);
                 this.direction = 1;
             }
         }
@@ -515,6 +1196,7 @@ export class Assignment2 extends Base_Scene {
             if (this.angle > 0.4999*Math.PI) {
                 this.angle = Math.PI*0.5;
             }
+            this.right_rotation_texture(context,program_state,this.direction);
             let c = [Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity()];
 
             for (let i = 0; i < 9; i++) {
@@ -524,13 +1206,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3] + 1]);
-                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
+                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic);
                 }
             }
 
@@ -585,6 +1267,7 @@ export class Assignment2 extends Base_Scene {
                 }
 
                 this.angle = 0;
+                this.right_rotation_texture_update(this.direction);
                 this.direction = 1;
             }
         }
@@ -596,6 +1279,7 @@ export class Assignment2 extends Base_Scene {
             if (this.angle > 0.4999*Math.PI) {
                 this.angle = Math.PI*0.5;
             }
+            this.left_rotation_texture(context,program_state,this.direction);
             let c = [Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity(), Mat4.identity()];
 
             for (let i = 0; i < 9; i++) {
@@ -605,13 +1289,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3] + 1]);
-                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic.override({color: this.randomColor[cube]}));
+                this.shapes.cube.draw(context, program_state, c[i], this.materials.plastic);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic);
                 }
             }
 
@@ -666,13 +1350,15 @@ export class Assignment2 extends Base_Scene {
                 }
 
                 this.angle = 0;
+                this.left_rotation_texture_update(this.direction);
                 this.direction = 1;
             }
         }
 
         if (this.pass){
+            this.idle_texture(context, program_state);
             for (let i = 0; i < 27; i++ ){
-                this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic.override({color: this.randomColor[this.cube_index[i]]}));
+                this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], this.materials.plastic);
             }
         }
     }
