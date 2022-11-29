@@ -14,3 +14,7 @@ In this project, we intend to make a computer game for a 3 by 3 by 3 Rubik's Cub
 <p>Mouse Control: Drag-picking System<br>
 Key Control:</p>
 | Key | Action |
+|  表头   | 表头  |
+|  ----  | ----  |
+| 单元格  | 单元格 |
+| 单元格  | 单元格 |
