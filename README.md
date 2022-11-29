@@ -24,9 +24,9 @@ Right Turn Down(L): Rotating the front right face clockwise<br>
 Right Turn Up(D): Rotating the front right face counter-clockwise<br>
 Choose Front Face(C): Look at the origin front face</p>
 
-| Key                  | Action           | 
-| -------------        |:-------------:| 
-| Reset the Cube(R)    | right-aligned |
+| Key                  | Action                                  | 
+| -------------        |:-------------:                          | 
+| Reset the Cube(R)    | Resetting the color of the Rubik's Cube |
 | Front Turn Left(S):  | centered      |  
 | Front Turn Right(K): | are neat      |
 | Front Turn Right(K): | are neat      |
