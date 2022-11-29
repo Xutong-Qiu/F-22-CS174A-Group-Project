@@ -23,8 +23,12 @@ Left Turn Up(A): Rotating the front left face counter-clockwise<br>
 Right Turn Down(L): Rotating the front right face clockwise<br>
 Right Turn Up(D): Rotating the front right face counter-clockwise<br>
 Choose Front Face(C): Look at the origin front face</p>
-| 111 | 111 |
-| ------ / ------/
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
 
 
 ### Additional Features
