@@ -2,8 +2,8 @@
 # Team Number: 30
 
 ### Team member:
-Xutong Qiu         xqiu@ucla.edu              806070771
-Zhongqian Luo      ishmael816@ucla.edu        006081523
+<p>Xutong Qiu         xqiu@ucla.edu              806070771<br>
+Zhongqian Luo      ishmael816@ucla.edu        006081523</p>
 Haoran Cheng       290607990qq@gmail.com      405542199
 Yunhao Du          dudulu19980209@gmail.com   605543503
 
