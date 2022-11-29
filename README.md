@@ -11,6 +11,6 @@ Yunhao Du          dudulu19980209@gmail.com   605543503</p>
 In this project, we intend to make a computer game for a 3 by 3 by 3 Rubik's Cube. Players can also try to solve it here themselves!
 
 ### User interface
-Mouse Control: Drag-picking System
-Key Control:
+<p>Mouse Control: Drag-picking System<br>
+Key Control:</p>
 | Key | Action |
