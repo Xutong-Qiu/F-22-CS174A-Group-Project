@@ -110,7 +110,8 @@ class Base_Scene extends Scene {
         // constructor(): Scenes begin by populating initial values like the Shapes and Materials they'll need.
         super();
         this.color = [hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa"),hex_color("#1a9ffa")];
-        this.hover = this.front_couter_clockwise = this.Right_turn = this.Top_turn = false;
+        this.hover = this.front_couter_clockwise = this.Right_turn = this.Top_turn = this.random = false;
+        this.random_counter = 0;
         this.pass = true;
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
@@ -156,7 +157,6 @@ export class Assignment2 extends Base_Scene {
      */
     constructor() {
         super();
-        this.set_colors();
         this.angle = 0;
         this.direction = 1;
         this.cube_matrix=[
@@ -343,15 +343,17 @@ export class Assignment2 extends Base_Scene {
             24,25,26
         ];
     }
-    set_colors() {
-        for(let i =0; i < 8; i++){
-            this.color[i] = color(Math.random(), Math.random(), Math.random(), 1.0);
-        }
-    }
+    // set_colors() {
+    //     for(let i =0; i < 8; i++){
+    //         this.color[i] = color(Math.random(), Math.random(), Math.random(), 1.0);
+    //     }
+    // }
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-        this.key_triggered_button("Change Colors", ["c"], this.set_colors);
+        this.key_triggered_button("Randomly mess up the cube", ["c"], () => {
+            this.random = !this.random;
+        });
         // Add a button for controlling the scene.
         this.key_triggered_button("Front Turn left", ["o"], () => {
             this.front_couter_clockwise = !this.front_couter_clockwise;
@@ -989,7 +991,38 @@ export class Assignment2 extends Base_Scene {
         //let angle = this.angle = 0.25*Math.PI*(Math.sin((2*Math.PI/1)*program_state.animation_time / 1000)+1);
         //let angle = this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
 
-        let degree = 0;
+        if(this.random && !this.front_couter_clockwise && !this.Top_turn && !this.Left_turn && !this.Right_turn){
+            let random_operation = Math.floor(Math.random()*4);
+            let random_direction = Math.floor(Math.random()*2);
+
+            switch (random_operation){
+                case 0:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 1:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 2:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 3:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+            }
+
+            if (random_direction == 1){
+                this.direction = -1;
+            }
+
+            this.random_counter = this.random_counter+1;
+            this.pass = !this.pass;
+
+            if (this.random_counter == 11){
+                this.random = !this.random;
+                this.random_counter = 0;
+            }
+
+        }
 
         if (this.front_couter_clockwise){
             let needed_index=[0,1,2,3,4,5,6,7,8];
@@ -1155,6 +1188,7 @@ export class Assignment2 extends Base_Scene {
                 this.direction = 1;
             }
         }
+
         if(this.Right_turn){
             let needed_index = [2, 5, 8, 11, 14, 17, 20, 23, 26];
             let coordinate = 0;
