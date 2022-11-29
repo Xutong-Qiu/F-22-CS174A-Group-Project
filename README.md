@@ -10,7 +10,7 @@ Yunhao Du          dudulu19980209@gmail.com   605543503</p>
 ### Introduction:
 In this project, we intend to make a computer game for a 3 by 3 by 3 Rubik's Cube. Players can also try to solve it here themselves!
 
-### User interface
+### User interface：
 <p>Mouse Control: Drag-picking System<br>
 Key Control:<br>
 Reset the Cube(R): Resetting the color of the Rubik's Cube<br>
@@ -23,6 +23,9 @@ Left Turn Up(A): Rotating the front left face counter-clockwise<br>
 Right Turn Down(L): Rotating the front right face clockwise<br>
 Right Turn Up(D): Rotating the front right face counter-clockwise<br>
 Choose Front Face(C): Look at the origin front face</p>
+| 111 | 111 |
+| ------ / ------/
+
 
 ### Additional Features
 * Shadow (shadow map); 
