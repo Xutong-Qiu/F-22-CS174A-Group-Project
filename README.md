@@ -24,12 +24,12 @@ Right Turn Down(L): Rotating the front right face clockwise<br>
 Right Turn Up(D): Rotating the front right face counter-clockwise<br>
 Choose Front Face(C): Look at the origin front face</p>
 
-| Tables        | Are           | 
-| ------------- |:-------------:| 
-| col 3 is      | right-aligned |
-| col 2 is      | centered      |  
-| zebra stripes | are neat      |
-
+| Key                  | Action           | 
+| -------------        |:-------------:| 
+| Reset the Cube(R)    | right-aligned |
+| Front Turn Left(S):  | centered      |  
+| Front Turn Right(K): | are neat      |
+| Front Turn Right(K): | are neat      |
 
 ### Additional Features
 * Shadow (shadow map); 
