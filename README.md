@@ -24,12 +24,18 @@ Right Turn Down(L): Rotating the front right face clockwise<br>
 Right Turn Up(D): Rotating the front right face counter-clockwise<br>
 Choose Front Face(C): Look at the origin front face</p>
 
-| Key                  | Action                                  | 
-| -------------        |:-------------:                          | 
-| Reset the Cube(R)    | Resetting the color of the Rubik's Cube |
-| Front Turn Left(S):  | centered      |  
-| Front Turn Right(K): | are neat      |
-| Front Turn Right(K): | are neat      |
+| Key                  | Action                                          | 
+| -------------        |:-------------:                                  | 
+| Reset the Cube(R)    | Resetting the color of the Rubik's Cube         |
+| Front Turn Left(S)   | Rotating the front face counter-clockwise       |    
+| Front Turn Right(K)  | Rotating the front face clockwise               |
+| Top Turn Left(W)     | Rotating the top face clockwise                 |
+| Top Turn Right(I)    | Rotating the top face counter-clockwise         |
+| Left Turn Down(J)    | Rotating the front left face clockwise          |  
+| Left Turn Up(A)      | Rotating the front left face counter-clockwise  |
+| Right Turn Down(L)   | Rotating the front right face clockwise         |
+| Right Turn Up(D)     | Rotating the front right face counter-clockwise |
+| Choose Front Face(C) | Look at the origin front face                   |
 
 ### Additional Features
 * Shadow (shadow map); 
