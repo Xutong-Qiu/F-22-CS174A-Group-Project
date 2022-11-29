@@ -12,17 +12,7 @@ In this project, we intend to make a computer game for a 3 by 3 by 3 Rubik's Cub
 
 ### User interface：
 <p>Mouse Control: Drag-picking System<br>
-Key Control:<br>
-Reset the Cube(R): Resetting the color of the Rubik's Cube<br>
-Front Turn Left(S): Rotating the front face counter-clockwise<br>
-Front Turn Right(K): Rotating the front face clockwise<br>
-Top Turn Left(W): Rotating the top face clockwise<br>
-Top Turn Right(I): Rotating the top face counter-clockwise<br>
-Left Turn Down(J): Rotating the front left face clockwise<br>
-Left Turn Up(A): Rotating the front left face counter-clockwise<br>
-Right Turn Down(L): Rotating the front right face clockwise<br>
-Right Turn Up(D): Rotating the front right face counter-clockwise<br>
-Choose Front Face(C): Look at the origin front face</p>
+Key Control:</p>
 
 | Key                  | Action                                          | 
 | -------------        |:-------------:                                  | 
