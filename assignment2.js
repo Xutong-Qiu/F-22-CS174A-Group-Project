@@ -113,6 +113,7 @@ class Base_Scene extends Scene {
         this.hover = this.front_couter_clockwise = this.Right_turn = this.Top_turn = this.random = false;
         this.random_counter = 0;
         this.pass = true;
+        this.front_face = 0;
         // At the beginning of our program, load one of each of these shape definitions onto the GPU.
         this.shapes = {
             'cube': new Cube(),
@@ -351,90 +352,208 @@ export class Assignment2 extends Base_Scene {
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
-<<<<<<< HEAD
         this.key_triggered_button("Randomly mess up the cube", ["c"], () => {
             this.random = !this.random;
         });
         // Add a button for controlling the scene.
         this.key_triggered_button("Front Turn left", ["o"], () => {
-            this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 1:
+                    //not implemented
+                    break;
+                case 2:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 3:
+                    //
+                    break;
+                case 4:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 5:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+
+            }
+
         });
         this.key_triggered_button("Front Turn right", ["o"], () => {
-=======
-        this.key_triggered_button("Reset the Cube", ["R"], () => {
-            this.random = !this.random;
-        });
-        // Add a button for controlling the scene.
-        this.key_triggered_button("Front Turn Left", ["S"], () => {
-            this.front_couter_clockwise = !this.front_couter_clockwise;
-            this.pass = !this.pass;
-        });
-        this.key_triggered_button("Front Turn Right", ["K"], () => {
->>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
             this.direction = -1;
-            this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 1:
+                    //not implemented
+                    break;
+                case 2:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 5:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+            }
+
         });
 
-<<<<<<< HEAD
         this.key_triggered_button("Top turn left", ["o"], () => {
-=======
-        this.key_triggered_button("Top Turn Left", ["W"], () => {
->>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
             this.direction = -1;
-            this.Top_turn = !this.Top_turn;
             this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 1:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 2:
+                    //nope
+                    break;
+                case 3:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 4:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 5:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+            }
+
         });
-<<<<<<< HEAD
         this.key_triggered_button("Top turn right", ["o"], () => {
-=======
-        this.key_triggered_button("Top Turn Right", ["I"], () => {
->>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
-            this.Top_turn = !this.Top_turn;
             this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 1:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 2:
+                    //nope
+                    break;
+                case 3:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 4:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+                case 5:
+                    this.Top_turn = !this.Top_turn;
+                    break;
+            }
         });
 
-<<<<<<< HEAD
         this.key_triggered_button("Left turn down", ["o"], () => {
-            this.Left_turn = !this.Left_turn;
             this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 1:
+                    this.direction = -1;
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 2:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 3:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 4:
+                    //nope
+                    break;
+                case 5:
+                    this.direction = -1;
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+            }
         });
         this.key_triggered_button("Left turn up", ["o"], () => {
-=======
-        this.key_triggered_button("Left Rurn Down", ["J"], () => {
-            this.Left_turn = !this.Left_turn;
             this.pass = !this.pass;
-        });
-        this.key_triggered_button("Left Turn Up", ["A"], () => {
->>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
-            this.direction = -1;
-            this.Left_turn = !this.Left_turn;
-            this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.direction = -1;
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 1:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 2:
+                    this.direction = -1;
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 3:
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 4:
+                    //nope
+                    break;
+                case 5:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+            }
         });
 
-<<<<<<< HEAD
         this.key_triggered_button("Right turn down", ["o"], () => {
-            this.Right_turn = !this.Right_turn;
             this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 1:
+                    this.direction = -1;
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 2:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 3:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 4:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 5:
+                    //nope
+                    break;
+            }
         });
         this.key_triggered_button("Right turn up", ["o"], () => {
-=======
-        this.key_triggered_button("Right Turn Down", ["L"], () => {
-            this.Right_turn = !this.Right_turn;
-            this.pass = !this.pass;
-        });
-        this.key_triggered_button("Right Turn Up", ["D"], () => {
             this.direction = -1;
-            this.Right_turn = !this.Right_turn;
             this.pass = !this.pass;
-        });
-
-        this.key_triggered_button("Choose Front Face", ["C"], () => {
->>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
-            this.direction = -1;
-            this.Right_turn = !this.Right_turn;
-            this.pass = !this.pass;
+            switch(this.front_face) {
+                case 0:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 1:
+                    this.direction = 1;
+                    this.Left_turn = !this.Left_turn;
+                    break;
+                case 2:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 3:
+                    this.Right_turn = !this.Right_turn;
+                    break;
+                case 4:
+                    this.front_couter_clockwise = !this.front_couter_clockwise;
+                    break;
+                case 5:
+                    //nope
+                    break;
+            }
         });
 
         this.key_triggered_button("Sit still", ["m"], () => {
@@ -1016,7 +1135,6 @@ export class Assignment2 extends Base_Scene {
 
     display(context, program_state) {
         super.display(context, program_state);
-        const blue = hex_color("#1a9ffa"), yellow = hex_color("#fdc03a");
         let model_transform = Mat4.identity();
 
         let t = program_state.animation_time/1000; //ms->s
@@ -1024,14 +1142,29 @@ export class Assignment2 extends Base_Scene {
         if(this.hover){
             t = Math.PI/2;
         }
-        let tr = Mat4.translation(1,1.5,0);
-        let rotation = Mat4.rotation((Math.sin(t)+1)*Math.PI*0.025, 0, 0, 1);
-        let tr2 = Mat4.translation(-1,-1.5,0);
-        let tr3 = Mat4.translation(0,3,0);
-        let sc = Mat4.scale(1,1.5,1);
-        let prev = Mat4.identity();
-        //let angle = this.angle = 0.25*Math.PI*(Math.sin((2*Math.PI/1)*program_state.animation_time / 1000)+1);
-        //let angle = this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
+
+        //let eye_position = Mat4.inverse(program_state.camera_transform);
+        let eye_position = program_state.camera_transform;
+        let eye_x = -eye_position[0][3];
+        let eye_y = -eye_position[1][3];
+        let eye_z = eye_position[2][3];
+        let norm = [[0,0,1],[0,0,-1],[0,1,0],[0,-1,0],[-1,0,0],[1,0,0]];
+        let face_center = [[0,0,1],[0,0,-5],[0,3,-2],[0,-3,-2],[-3,0,-2],[3,0,-2]];
+
+        let minimum_angle = 180;
+        let face_to_front = 0;
+
+        for ( let i = 0; i < 6; i++ ){
+            let eye_vector = [eye_x-face_center[i][0],eye_y-face_center[i][1],eye_z-face_center[i][2]];
+            let dot_product = eye_vector[0]*norm[i][0]+eye_vector[1]*norm[i][1]+eye_vector[2]*norm[i][2];
+            let magnitude = Math.sqrt(eye_vector[0]**2+eye_vector[1]**2+eye_vector[2]**2)*Math.sqrt(norm[i][0]**2+norm[i][1]**2+norm[i][2]**2);
+            let current_angle = Math.acos(dot_product/magnitude);
+
+            if ( current_angle < minimum_angle){
+                minimum_angle = current_angle;
+                this.front_face = i;
+            }
+        }
 
         if(this.random && !this.front_couter_clockwise && !this.Top_turn && !this.Left_turn && !this.Right_turn){
             let random_operation = Math.floor(Math.random()*4);
