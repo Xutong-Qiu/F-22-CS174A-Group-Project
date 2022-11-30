@@ -395,7 +395,7 @@ export class Assignment2 extends Base_Scene {
             this.pass = !this.pass;
         });
 
-        this.key_triggered_button("Sit still", ["m"], () => {
+        this.key_triggered_button("reset to the front", ["m"], () => {
             this.hover =! this.hover;
         });
     }
@@ -974,7 +974,6 @@ export class Assignment2 extends Base_Scene {
 
     display(context, program_state) {
         super.display(context, program_state);
-        const blue = hex_color("#1a9ffa"), yellow = hex_color("#fdc03a");
         let model_transform = Mat4.identity();
 
         let t = program_state.animation_time/1000; //ms->s
@@ -982,14 +981,29 @@ export class Assignment2 extends Base_Scene {
         if(this.hover){
             t = Math.PI/2;
         }
-        let tr = Mat4.translation(1,1.5,0);
-        let rotation = Mat4.rotation((Math.sin(t)+1)*Math.PI*0.025, 0, 0, 1);
-        let tr2 = Mat4.translation(-1,-1.5,0);
-        let tr3 = Mat4.translation(0,3,0);
-        let sc = Mat4.scale(1,1.5,1);
-        let prev = Mat4.identity();
-        //let angle = this.angle = 0.25*Math.PI*(Math.sin((2*Math.PI/1)*program_state.animation_time / 1000)+1);
-        //let angle = this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
+
+        //let eye_position = Mat4.inverse(program_state.camera_transform);
+        let eye_position = program_state.camera_transform;
+        let eye_x = -eye_position[0][3];
+        let eye_y = -eye_position[1][3];
+        let eye_z = eye_position[2][3];
+        let norm = [[0,0,1],[0,0,-1],[0,1,0],[0,-1,0],[-1,0,0],[1,0,0]];
+        let face_center = [[0,0,1],[0,0,-5],[0,3,-2],[0,-3,-2],[-3,0,-2],[3,0,-2]];
+
+        let minimum_angle = 180;
+        let face_to_front = 0;
+
+        for ( let i = 0; i < 6; i++ ){
+            let eye_vector = [eye_x-face_center[i][0],eye_y-face_center[i][1],eye_z-face_center[i][2]];
+            let dot_product = eye_vector[0]*norm[i][0]+eye_vector[1]*norm[i][1]+eye_vector[2]*norm[i][2];
+            let magnitude = Math.sqrt(eye_vector[0]**2+eye_vector[1]**2+eye_vector[2]**2)*Math.sqrt(norm[i][0]**2+norm[i][1]**2+norm[i][2]**2);
+            let current_angle = Math.acos(dot_product/magnitude);
+
+            if ( current_angle < minimum_angle){
+                minimum_angle = current_angle;
+                face_to_front = i;
+            }
+        }
 
         if(this.random && !this.front_couter_clockwise && !this.Top_turn && !this.Left_turn && !this.Right_turn){
             let random_operation = Math.floor(Math.random()*4);
