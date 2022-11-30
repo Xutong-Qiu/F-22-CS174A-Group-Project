@@ -351,6 +351,7 @@ export class Assignment2 extends Base_Scene {
 
     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
+<<<<<<< HEAD
         this.key_triggered_button("Randomly mess up the cube", ["c"], () => {
             this.random = !this.random;
         });
@@ -360,36 +361,77 @@ export class Assignment2 extends Base_Scene {
             this.pass = !this.pass;
         });
         this.key_triggered_button("Front Turn right", ["o"], () => {
+=======
+        this.key_triggered_button("Reset the Cube", ["R"], () => {
+            this.random = !this.random;
+        });
+        // Add a button for controlling the scene.
+        this.key_triggered_button("Front Turn Left", ["S"], () => {
+            this.front_couter_clockwise = !this.front_couter_clockwise;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Front Turn Right", ["K"], () => {
+>>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
             this.direction = -1;
             this.front_couter_clockwise = !this.front_couter_clockwise;
             this.pass = !this.pass;
         });
 
+<<<<<<< HEAD
         this.key_triggered_button("Top turn left", ["o"], () => {
+=======
+        this.key_triggered_button("Top Turn Left", ["W"], () => {
+>>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
             this.direction = -1;
             this.Top_turn = !this.Top_turn;
             this.pass = !this.pass;
         });
+<<<<<<< HEAD
         this.key_triggered_button("Top turn right", ["o"], () => {
+=======
+        this.key_triggered_button("Top Turn Right", ["I"], () => {
+>>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
             this.Top_turn = !this.Top_turn;
             this.pass = !this.pass;
         });
 
+<<<<<<< HEAD
         this.key_triggered_button("Left turn down", ["o"], () => {
             this.Left_turn = !this.Left_turn;
             this.pass = !this.pass;
         });
         this.key_triggered_button("Left turn up", ["o"], () => {
+=======
+        this.key_triggered_button("Left Rurn Down", ["J"], () => {
+            this.Left_turn = !this.Left_turn;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Left Turn Up", ["A"], () => {
+>>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
             this.direction = -1;
             this.Left_turn = !this.Left_turn;
             this.pass = !this.pass;
         });
 
+<<<<<<< HEAD
         this.key_triggered_button("Right turn down", ["o"], () => {
             this.Right_turn = !this.Right_turn;
             this.pass = !this.pass;
         });
         this.key_triggered_button("Right turn up", ["o"], () => {
+=======
+        this.key_triggered_button("Right Turn Down", ["L"], () => {
+            this.Right_turn = !this.Right_turn;
+            this.pass = !this.pass;
+        });
+        this.key_triggered_button("Right Turn Up", ["D"], () => {
+            this.direction = -1;
+            this.Right_turn = !this.Right_turn;
+            this.pass = !this.pass;
+        });
+
+        this.key_triggered_button("Choose Front Face", ["C"], () => {
+>>>>>>> f2e2f9fec363fe970bd24a39f1298cd057a23129
             this.direction = -1;
             this.Right_turn = !this.Right_turn;
             this.pass = !this.pass;
