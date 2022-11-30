@@ -372,6 +372,7 @@ export class Assignment2 extends Base_Scene {
                     //
                     break;
                 case 4:
+                    this.direction = -1;
                     this.Left_turn = !this.Left_turn;
                     break;
                 case 5:
@@ -397,6 +398,7 @@ export class Assignment2 extends Base_Scene {
                 case 3:
                     break;
                 case 4:
+                    this.direction = 1;
                     this.Left_turn = !this.Left_turn;
                     break;
                 case 5:
