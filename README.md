@@ -28,8 +28,7 @@ Key Control:</p>
 | Choose Front Face(C) | Look at the origin front face                   |
 <p>Button Control:<p>
 
-![image-3-ring](docs/Picture3.png)
-<p>   </p>
+![image-3-ring](docs/Picture3.png)<br>
 ![image-3-ring](docs/Picture2.png)
 ![image-3-ring](docs/Picture1.png)
 
