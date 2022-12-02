@@ -1,10 +1,10 @@
 import {defs, tiny} from './examples/common.js';
 import {Color_Phong_Shader, Shadow_Textured_Phong_Shader,
-    Depth_Texture_Shader_2D, Buffered_Texture, LIGHT_DEPTH_TEX_SIZE} from './examples/shadow-demo-shaders.js'
+        Depth_Texture_Shader_2D, Buffered_Texture, LIGHT_DEPTH_TEX_SIZE} from './examples/shadow-demo-shaders.js'
 
 
 const {
-    Vector, Vector3, vec, vec3, vec4, color, hex_color, Matrix, Mat4, Light, Shape, Material, Scene,
+    Vector, Vector3, vec, vec3, vec4, color, hex_color, Matrix, Mat4, Light, Shape, Material, Scene,Texture
 } = tiny;
 const {Axis_Arrows, Textured_Phong, Phong_Shader, Basic_Shader, Subdivision_Sphere} = defs
 
@@ -144,70 +144,81 @@ class Base_Scene extends Scene {
             "sphere": new Subdivision_Sphere(6),
             "square_2d": new Square(),
         };
+            
+            this.floor = new Material(new Shadow_Textured_Phong_Shader(1), {
+            color: color(1, 1, 1, 1), ambient: .3, diffusivity: 0.6, specularity: 0.4, smoothness: 64,
+            color_texture: new Texture("assets/elder.png","NEAREST"),
+            texture_in_shadow: new Texture("assets/dian.jpg","NEAREST"),
+            light_depth_texture: null
+        })
 
-        this.floor = new Material(new Shadow_Textured_Phong_Shader(1), {
+            this.floor2 = new Material(new Shadow_Textured_Phong_Shader(1), {
             color: color(1, 1, 1, 1), ambient: .3, diffusivity: 0.6, specularity: 0.4, smoothness: 64,
             color_texture: null,
             light_depth_texture: null
         })
-
-
-        // For the first pass
-        this.pure = new Material(new Color_Phong_Shader(), {
-
+            
+            this.dian = new Material(new Shadow_Textured_Phong_Shader(1), {
+            color: color(1, 1, 1, 1), ambient: 0.2, diffusivity: 1, specularity: 0.2, smoothness: 64,
+            color_texture: new Texture("assets/dian.jpg","NEAREST"),
+            light_depth_texture: null
         })
-        // For light source
-        this.light_src = new Material(new defs.Phong_Shader(), {
-            color: color(1, 1, 1, 1), ambient: 1, diffusivity: 0, specularity: 0
-        });
-        // For depth texture display
-        this.depth_tex =  new Material(new Depth_Texture_Shader_2D(), {
-            color: color(0, 0, .0, 1),
-            ambient: 1, diffusivity: 0, specularity: 0, texture: null
-
-
-        });
-        this.front_face = 0;
-
+            
+            
+            // For the first pass
+            this.pure = new Material(new Color_Phong_Shader(), {
+                    
+            })
+            // For light source
+            this.light_src = new Material(new defs.Phong_Shader(), {
+                    color: color(1, 1, 1, 1), ambient: 1, diffusivity: 0, specularity: 0
+            });
+            // For depth texture display
+            this.depth_tex =  new Material(new Depth_Texture_Shader_2D(), {
+                    color: color(0, 0, .0, 1),
+                    ambient: 1, diffusivity: 0, specularity: 0, texture: null    
+                            
+           
+    });
+             this.front_face = 0;
+        
         // To make sure texture initialization only does once
         this.init_ok = false;
 
         // *** Materials
         this.materials = {
-            plastic: new Material(new Shadow_Textured_Phong_Shader(1), {
-                color: color(1, 1, 1, 1), ambient: .3, diffusivity: 0.6, specularity: 0.4, smoothness: 64,
-                color_texture: null,
-                light_depth_texture: null
+                plastic: new Material(new Phong_Shader(1), {
+                    color: color(1, 1, 1, 1), ambient: .3, diffusivity: 0.6, specularity: 0.4, smoothness: 64,
             })
         };
         // The white material and basic shader are used for drawing the outline.
         this.white = new Material(new defs.Basic_Shader());
 
-
+        
     }
 
 
-    texture_buffer_init(gl) {
-
+        texture_buffer_init(gl) {
+                
         // Depth Texture
         this.lightDepthTexture = gl.createTexture();
         // Bind it to TinyGraphics
         this.light_depth_texture = new Buffered_Texture(this.lightDepthTexture);
         //this.materials.plastic.light_depth_texture = this.light_depth_texture;
         this.floor.light_depth_texture = this.light_depth_texture;
-
+                
         this.lightDepthTextureSize = LIGHT_DEPTH_TEX_SIZE;
         gl.bindTexture(gl.TEXTURE_2D, this.lightDepthTexture);
         gl.texImage2D(
-            gl.TEXTURE_2D,      // target
-            0,                  // mip level
-            gl.DEPTH_COMPONENT, // internal format
-            this.lightDepthTextureSize,   // width
-            this.lightDepthTextureSize,   // height
-            0,                  // border
-            gl.DEPTH_COMPONENT, // format
-            gl.UNSIGNED_INT,    // type
-            null);              // data
+                gl.TEXTURE_2D,      // target
+                      0,                  // mip level
+                gl.DEPTH_COMPONENT, // internal format
+                this.lightDepthTextureSize,   // width
+                this.lightDepthTextureSize,   // height
+                0,                  // border
+                gl.DEPTH_COMPONENT, // format
+                gl.UNSIGNED_INT,    // type
+                null);              // data
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -215,36 +226,36 @@ class Base_Scene extends Scene {
         // Depth Texture Buffer
         this.lightDepthFramebuffer = gl.createFramebuffer();
         gl.bindFramebuffer(gl.FRAMEBUFFER, this.lightDepthFramebuffer);
-
+                
         gl.framebufferTexture2D(
-            gl.FRAMEBUFFER,       // target
-            gl.DEPTH_ATTACHMENT,  // attachment point
-            gl.TEXTURE_2D,        // texture target
-            this.lightDepthTexture,         // texture
-            0);                   // mip level
+                gl.FRAMEBUFFER,       // target
+                gl.DEPTH_ATTACHMENT,  // attachment point
+                gl.TEXTURE_2D,        // texture target
+                this.lightDepthTexture,         // texture
+                0);                   // mip level
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-
+                
         // create a color texture of the same size as the depth texture
         // see article why this is needed_
         this.unusedTexture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, this.unusedTexture);
         gl.texImage2D(
-            gl.TEXTURE_2D,
-            0,
-            gl.RGBA,
-            this.lightDepthTextureSize,
-            this.lightDepthTextureSize,
-            0,
-            gl.RGBA,
-            gl.UNSIGNED_BYTE,
-            null,
+                gl.TEXTURE_2D,
+                      0,
+                      gl.RGBA,
+                      this.lightDepthTextureSize,
+                this.lightDepthTextureSize,
+                0,
+                gl.RGBA,
+                gl.UNSIGNED_BYTE,
+                null,       
         );
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         // attach it to the framebuffer
-
+        
         gl.framebufferTexture2D(
             gl.FRAMEBUFFER,        // target
             gl.COLOR_ATTACHMENT0,  // attachment point
@@ -254,7 +265,7 @@ class Base_Scene extends Scene {
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     }
 
-
+        
 
     display(context, program_state) {
         // display():  Called once per frame of animation. Here, the base class's display only does
@@ -468,8 +479,13 @@ export class Assignment2 extends Base_Scene {
             24,25,26
         ];
     }
+    // set_colors() {
+    //     for(let i =0; i < 8; i++){
+    //         this.color[i] = color(Math.random(), Math.random(), Math.random(), 1.0);
+    //     }
+    // }
 
-    make_control_panel() {
+     make_control_panel() {
         // Draw the scene's buttons, setup their actions and keyboard shortcuts, and monitor live measurements.
         this.key_triggered_button("Randomly mess up the cube", ["c"], () => {
             this.random = !this.random;
@@ -1258,7 +1274,7 @@ export class Assignment2 extends Base_Scene {
     display(context, program_state) {
         const t = program_state.animation_time;
         const gl = context.context;
-
+            
         //this.initial_cubemap(context, program_state);
 
         if (!this.init_ok) {
@@ -1311,9 +1327,9 @@ export class Assignment2 extends Base_Scene {
         program_state.light_tex_mat = light_proj_mat;
         program_state.view_mat = light_view_mat;
         program_state.projection_transform = light_proj_mat;
-
-
-
+        
+         
+        
 
         this.render_scene(context, program_state, false,false, false);
 
@@ -1322,15 +1338,21 @@ export class Assignment2 extends Base_Scene {
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         program_state.view_mat = program_state.camera_inverse;
         program_state.projection_transform = Mat4.perspective(Math.PI / 4, context.width / context.height, 0.5, 500);
-
+        
         this.render_scene(context, program_state, true,true, true);
-
+        
     }
 
 
-
-    render_scene(context, program_state, shadow_pass, draw_light_source=false, draw_shadow=false) {
-
+        
+        render_scene(context, program_state, shadow_pass, draw_light_source=false, draw_shadow=false) {
+        // shadow_pass: true if this is the second pass that draw the shadow.
+        // draw_light_source: true if we want to draw the light source.
+        // draw_shadow: true if we want to draw the shadow
+        //super.display(context, program_state);
+        //const blue = hex_color("#1a9ffa"), yellow = hex_color("#fdc03a");
+        let model_transform = Mat4.identity();
+        
 
         let light_position = this.light_position;
         let light_color = this.light_color;
@@ -1350,25 +1372,50 @@ export class Assignment2 extends Base_Scene {
         let model_trans_wall_2 = Mat4.translation(+8, -5 - 0.1, 0).times(Mat4.scale(0.33, 2, 5));
         let model_trans_wall_3 = Mat4.translation(0, -5 - 0.1, -5).times(Mat4.scale(8, 2, 0.33));
 
-        let model_trans_ball_0 = Mat4.translation(0, 1, 0);
-        let model_trans_ball_1 = Mat4.translation(5, 1, 0);
-        let model_trans_ball_2 = Mat4.translation(-5, 1, 0);
 
-        this.shapes.sphere.draw(context, program_state, model_trans_ball_0, shadow_pass? this.floor : this.pure);
-        this.shapes.sphere.draw(context, program_state, model_trans_ball_1, shadow_pass? this.floor : this.pure);
-        this.shapes.sphere.draw(context, program_state, model_trans_ball_2, shadow_pass? this.floor : this.pure);
-
+                
         this.shapes.cube.draw(context, program_state, model_trans_floor, shadow_pass? this.floor : this.pure);
         this.shapes.cube.draw(context, program_state, model_trans_wall_1, shadow_pass? this.floor : this.pure);
         this.shapes.cube.draw(context, program_state, model_trans_wall_2, shadow_pass? this.floor : this.pure);
         this.shapes.cube.draw(context, program_state, model_trans_wall_3, shadow_pass? this.floor : this.pure);
 
 
+                /*
+        let light_position = this.light_position;
+        let light_color = this.light_color;
+        const t = program_state.animation_time;
+
+        program_state.draw_shadow = draw_shadow;
+
+        if (draw_light_source && shadow_pass) {
+            this.shapes.sphere.draw(context, program_state,
+                Mat4.translation(light_position[0], light_position[1], light_position[2]).times(Mat4.scale(.5,.5,.5)),
+                this.light_src.override({color: light_color}));
+        }
+        
+        for (let i of [-1, 1]) { // Spin the 3D model shapes as well.
+            const model_transform = Mat4.translation(2 * i, 3, 0)
+                .times(Mat4.rotation(t / 1000, -1, 2, 0))
+                .times(Mat4.rotation(-Math.PI / 2, 1, 0, 0));
+            this.shapes.teapot.draw(context, program_state, model_transform, shadow_pass? this.stars : this.pure);
+             
+        }
+                */
+
 
         if(this.hover){
             t = Math.PI/2;
         }
+        let tr = Mat4.translation(1,1.5,0);
+        let rotation = Mat4.rotation((Math.sin(t)+1)*Math.PI*0.025, 0, 0, 1);
+        let tr2 = Mat4.translation(-1,-1.5,0);
+        let tr3 = Mat4.translation(0,3,0);
+        let sc = Mat4.scale(1,1.5,1);
+        let prev = Mat4.identity();
+        //let angle = this.angle = 0.25*Math.PI*(Math.sin((2*Math.PI/1)*program_state.animation_time / 1000)+1);
+        //let angle = this.angle = this.angle+0.25*Math.PI*(program_state.animation_delta_time / 1000);
 
+        //let eye_position = Mat4.inverse(program_state.camera_transform);
         let eye_position = program_state.camera_transform;
         let eye_x = -eye_position[0][3];
         let eye_y = -eye_position[1][3];
@@ -1391,7 +1438,7 @@ export class Assignment2 extends Base_Scene {
             }
         }
 
-
+                
         if(this.random && !this.front_couter_clockwise && !this.Top_turn && !this.Left_turn && !this.Right_turn){
             let random_operation = Math.floor(Math.random()*4);
             let random_direction = Math.floor(Math.random()*2);
@@ -1441,13 +1488,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]+1]);
-                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor : this.pure);
+                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor2 : this.pure);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor : this.pure);
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor2 : this.pure);
                 }
             }
 
@@ -1524,13 +1571,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3] + 1]);
-                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor : this.pure);
+                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor2 : this.pure);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor : this.pure);
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor2 : this.pure);
                 }
             }
 
@@ -1607,13 +1654,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3] + 1]);
-                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor : this.pure);
+                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor2 : this.pure);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor : this.pure);
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor2 : this.pure);
                 }
             }
 
@@ -1690,13 +1737,13 @@ export class Assignment2 extends Base_Scene {
                 c[i] = this.cube_matrix[cube];
                 c[i] = c[i].times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3]]);
                 c[i] = c[i].times(ro).times(this.cube_recenter[cube][this.cube_coordinate_status[cube][coordinate][3] + 1]);
-                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor : this.pure);
+                this.shapes.cube.draw(context, program_state, c[i], shadow_pass? this.floor2 : this.pure);
                 //this.cube_matrix[cube]=c[i];
             }
 
             for (let i = 0; i < 27; i++ ){
                 if (! needed_index.includes(i,0)){
-                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor : this.pure);
+                    this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor2 : this.pure);
                 }
             }
 
@@ -1759,11 +1806,11 @@ export class Assignment2 extends Base_Scene {
         if (this.pass){
             this.idle_texture(context, program_state);
             for (let i = 0; i < 27; i++ ){
-                this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor : this.pure);
+                this.shapes.cube.draw(context, program_state, this.cube_matrix[this.cube_index[i]], shadow_pass? this.floor2 : this.pure);
             }
         }
-
+               
     }
 
-
+        
 }
